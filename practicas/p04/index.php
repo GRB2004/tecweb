@@ -17,9 +17,6 @@
         $var7;
         $_element1;
         //$house*5;     // Invalida
-        $a = "PHP server";
-        $b = &$a;
-        $c = &$a;
 
         echo '<h4>Respuesta:</h4>';   
     
@@ -31,14 +28,56 @@
         echo '<li>$var7 es válida porque inicia con una letra.</li>';
         echo '<li>$_element1 es válida porque inicia con guión bajo.</li>';
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
-        echo '<li>
-                <p>Lo que ocurrio en el segundo bloque de asignaciones es que todas las variables tenian el valor de PHP server</p>
-                <p>porque en la variable b se hacia una referencia a y en la c tambien se hacia una referencia a esta misma variable.</p>
-             </li>';
+        echo '</ul>';
+
+    ?>
+    <h2>Ejercicio 2</h2>
+    <p>Proporcionar los valores de $a, $b, $c como sigue:</p>
+    <?php
+        $a = "PHP server";
+        $b = &$a;
+        $c = &$a;
+        echo '<ul>';
         echo "<li>Mostrando a $a</li>";
         echo "<li>Mostrando a $b</li>";
         echo "<li>Mostrando a $c</li>";
         echo '</ul>';
     ?>
+        <p>Lo que ocurrio en el segundo bloque de asignaciones es que todas las variables tenian el valor de PHP server</p>
+        <p>porque en la variable b se hacia una referencia a y en la c tambien se hacia una referencia a esta misma variable.</p>
+
+    <h2>Ejercicio 3</h2>
+    <p>
+        Muestra el contenido de cada variable inmediatamente después de cada asignación,
+        verificar la evolución del tipo de estas variables (imprime todos los componentes de los
+        arreglo):
+    </p>
+    <?php
+        $a = "PHP5";
+        echo "<li>Mostrando variable a: $a</li>";
+        $z[] = "MySQL";
+        var_dump($z);
+        $b = "5a version de PHP";
+        echo "<li>Mostrando a variable b: $b</li>";
+        $c = $b*10;
+        echo "<li>Mostrando a variable c: $c</li>";
+        $a .= $b;
+        echo "<li>Mostrando a variable a: $a</li>";
+        $b *= $c;
+        echo "<li>Mostrando a variable b: $b</li>";
+        
+    ?>
+    <h2>Ejercicio 4</h2>
+    <?php
+        $GLOBALS['a'];
+        echo "\$GLOBALS['a'] = " . $GLOBALS['a'] . "\n";
+        $GLOBALS['z'];
+        var_dump($z);
+        $GLOBALS['b'];
+        echo "\$GLOBALS['b'] = " . $GLOBALS['b'] . "\n";
+        $GLOBALS['c'];
+        echo "\$GLOBALS['c'] = " . $GLOBALS['c'] . "\n";
+    ?>
+    
 </body>
 </html>
