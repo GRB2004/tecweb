@@ -17,7 +17,10 @@
         $var7;
         $_element1;
         //$house*5;     // Invalida
-        
+        $a = "PHP server";
+        $b = &$a;
+        $c = &$a;
+
         echo '<h4>Respuesta:</h4>';   
     
         echo '<ul>';
@@ -28,6 +31,13 @@
         echo '<li>$var7 es válida porque inicia con una letra.</li>';
         echo '<li>$_element1 es válida porque inicia con guión bajo.</li>';
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
+        echo '<li>
+                <p>Lo que ocurrio en el segundo bloque de asignaciones es que todas las variables tenian el valor de PHP server</p>
+                <p>porque en la variable b se hacia una referencia a y en la c tambien se hacia una referencia a esta misma variable.</p>
+             </li>';
+        echo "<li>Mostrando a $a</li>";
+        echo "<li>Mostrando a $b</li>";
+        echo "<li>Mostrando a $c</li>";
         echo '</ul>';
     ?>
 </body>
