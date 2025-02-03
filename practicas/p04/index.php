@@ -125,15 +125,20 @@
 
     <h2>Ejercicio 7</h2>
     <?php
-        $a = "7 personas";
-        $b = (integer) $a;
-        $a = "9E3";
-        $c = (double) $a;
+        // a. Versión de Apache y PHP
+        $apache_version = $_SERVER['SERVER_SOFTWARE']; // Información del servidor (Apache)
+        $php_version = phpversion(); // Versión de PHP
 
-        echo "\$a = $a <br>";
-        echo "\$b = $b <br>";
-        echo "\$c = $c <br>";
-    ?>
-    
+        echo "Versión de Apache: $apache_version <br>";
+        echo "Versión de PHP: $php_version <br>";
+
+        // b. Nombre del sistema operativo (servidor)
+        $os_name = php_uname('s'); // Nombre del sistema operativo
+        echo "Sistema operativo del servidor: $os_name <br>";
+
+        // c. Idioma del navegador (cliente)
+        $browser_language = $_SERVER['HTTP_ACCEPT_LANGUAGE']; // Idioma aceptado por el navegador
+        echo "Idioma del navegador: $browser_language <br>";
+?>
 </body>
 </html>
