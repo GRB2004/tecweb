@@ -78,6 +78,62 @@
         $GLOBALS['c'];
         echo "\$GLOBALS['c'] = " . $GLOBALS['c'] . "\n";
     ?>
+
+    <h2>Ejercicio 5</h2>
+    <?php
+        $a = "7 personas";
+        $b = (integer) $a;
+        $a = "9E3";
+        $c = (double) $a;
+
+        echo "\$a = $a <br>";
+        echo "\$b = $b <br>";
+        echo "\$c = $c <br>";
+    ?>
+
+    <h2>Ejercicio 6</h2>
+    <?php
+        $a = "0";
+        $b = "TRUE";
+        $c = FALSE;
+        $d = ($a OR $b);
+        $e = ($a AND $c);
+        $f = ($a XOR $b);
+
+        echo "Valor booleano de \$a: <br>";
+        var_dump($a);
+        echo "<br> Valor booleano de \$b: <br>";
+        var_dump($b);
+        echo "<br> Valor booleano de \$c: <br>";
+        var_dump($c);
+        echo "<br> Valor booleano de \$d: <br>";
+        var_dump($d);
+        echo "<br> Valor booleano de \$e: <br>";
+        var_dump($e);
+        echo "<br> Valor booleano de \$f: <br>";
+        var_dump($f);
+
+        //Transformando los valores
+        function boolToString($bool) {
+            return $bool ? 'true' : 'false';
+        }
+
+        // Mostrar los valores transformados con echo
+        echo "<br> Valor de \$c transformado: " . boolToString($c) . "<br>";
+        echo "<br> Valor de \$e transformado: " . boolToString($e) . "<br>";
+    ?>
+
+    <h2>Ejercicio 7</h2>
+    <?php
+        $a = "7 personas";
+        $b = (integer) $a;
+        $a = "9E3";
+        $c = (double) $a;
+
+        echo "\$a = $a <br>";
+        echo "\$b = $b <br>";
+        echo "\$c = $c <br>";
+    ?>
     
 </body>
 </html>
