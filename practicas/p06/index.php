@@ -55,8 +55,8 @@ el valor en cada índice.</p>
     </form>
     <br>
     <?php
-        include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
-        $arreglo = arreglo_ascii(); // Llamamos a la función
+        //include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
+        //$arreglo = arreglo_ascii(); // Llamamos a la función
         ?>
 
     <table border="1">
@@ -81,5 +81,39 @@ el valor en cada índice.</p>
             <?php endif; ?>
         </tbody>
     </table>
+
+    <h2>Ejercicio 5</h2>
+    <p>Usar las variables $edad y $sexo en una instrucción if para identificar una persona de
+sexo “femenino”, cuya edad oscile entre los 18 y 35 años y mostrar un mensaje de
+bienvenida apropiado.</p>
+    <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
+        Edad: <input type="text" name="edad"><br>
+        <br> 
+        <label for="Masculino"><input id="Masculino"  name="sexo" type="radio" value="Masculino" checked />Masculino</label>
+        <label for="Masculino"><input id="Masculino"  name="sexo" type="radio" value="Femenino"/>Femenino</label>
+        <br>
+        <input type="submit" name="submit">
+    </form>
+    <br>
+    <?php
+        /*
+        include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
+        rango_edad();
+        */
+    ?>
+    <h2>Ejercicio 6</h2>
+    <p>Crea en código duro un arreglo asociativo que sirva para registrar el parque vehicular de
+una ciudad.</p>
+    <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
+        Ingrese la matricula: <input type="text" name="matricula"><br>
+        <input type="submit" name="submit">
+        <br> 
+        <input type="submit" name="todos">
+        <br>
+    </form>
+    <?php
+         include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
+         autos();
+    ?>
 </body>
 </html>

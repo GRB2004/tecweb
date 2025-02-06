@@ -99,4 +99,229 @@
                 return $arreglo;
             }
         }
+
+        function rango_edad() {
+            if(isset($_POST['submit']))
+            {
+                $edad = $_POST['edad'];
+                $sexo = $_POST['sexo'];
+                if($edad>=18 || $edad<=35){
+                    if($sexo=='Masculino')
+                    {
+                        echo 'Bienvenido, usted está en el rango de edad permitido.';
+                    } else {
+                        echo 'Bienvenida, usted está en el rango de edad permitido.';
+                    }
+                } else {
+                    echo 'Usted no está en el rango de edad permitido.';
+                }
+            }
+        }
+
+        function autos() {
+            $autos = array(
+                'AWL2389' => [
+                    'auto' => [
+                        'Marca' => 'Honda',
+                        'Modelo' => 'Civic',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Juan',
+                        'Ciudad' => 'Puebla',
+                        'Direccion' => 'EL CENTRO'
+                    ],
+                ],
+            
+                'FDO4859' => [
+                    'auto' => [
+                        'Marca' => 'Ford',
+                        'Modelo' => 'Bronco',
+                        'Tipo' => 'Hatchback',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Pedro',
+                        'Ciudad' => 'Nuevo Leon',
+                        'Direccion' => 'PINOS LOCALES 18'
+                    ],
+                ],
+            
+                'OLR9078' => [
+                    'auto' => [
+                        'Marca' => 'Tesla',
+                        'Modelo' => 'Y',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Alan',
+                        'Ciudad' => 'Tijuana',
+                        'Direccion' => 'BENITO J. 210'
+                    ],
+                ],
+            
+                'XYZ1234' => [
+                    'auto' => [
+                        'Marca' => 'Toyota',
+                        'Modelo' => 'Corolla',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Maria',
+                        'Ciudad' => 'Guadalajara',
+                        'Direccion' => 'AV. INDEPENDENCIA 456'
+                    ],
+                ],
+            
+                'ABC5678' => [
+                    'auto' => [
+                        'Marca' => 'Chevrolet',
+                        'Modelo' => 'Camaro',
+                        'Tipo' => 'Coupe',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Carlos',
+                        'Ciudad' => 'Monterrey',
+                        'Direccion' => 'CALLE PRINCIPAL 789'
+                    ],
+                ],
+            
+                'DEF9101' => [
+                    'auto' => [
+                        'Marca' => 'Nissan',
+                        'Modelo' => 'Sentra',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Laura',
+                        'Ciudad' => 'Cancun',
+                        'Direccion' => 'AV. TULUM 123'
+                    ],
+                ],
+            
+                'GHI1121' => [
+                    'auto' => [
+                        'Marca' => 'Volkswagen',
+                        'Modelo' => 'Jetta',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Roberto',
+                        'Ciudad' => 'Queretaro',
+                        'Direccion' => 'CALLE 5 DE MAYO 67'
+                    ],
+                ],
+            
+                'JKL3141' => [
+                    'auto' => [
+                        'Marca' => 'BMW',
+                        'Modelo' => 'X5',
+                        'Tipo' => 'SUV',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Sofia',
+                        'Ciudad' => 'Ciudad de Mexico',
+                        'Direccion' => 'REFORMA 890'
+                    ],
+                ],
+            
+                'MNO5161' => [
+                    'auto' => [
+                        'Marca' => 'Audi',
+                        'Modelo' => 'A4',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Fernando',
+                        'Ciudad' => 'Merida',
+                        'Direccion' => 'CALLE 60 1234'
+                    ],
+                ],
+            
+                'PQR7181' => [
+                    'auto' => [
+                        'Marca' => 'Hyundai',
+                        'Modelo' => 'Tucson',
+                        'Tipo' => 'SUV',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Ana',
+                        'Ciudad' => 'Oaxaca',
+                        'Direccion' => 'AV. LIBERTAD 567'
+                    ],
+                ],
+            
+                'STU9202' => [
+                    'auto' => [
+                        'Marca' => 'Kia',
+                        'Modelo' => 'Rio',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Javier',
+                        'Ciudad' => 'Veracruz',
+                        'Direccion' => 'CALLE PRIMERA 890'
+                    ],
+                ],
+            
+                'VWX1222' => [
+                    'auto' => [
+                        'Marca' => 'Mazda',
+                        'Modelo' => 'CX-5',
+                        'Tipo' => 'SUV',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Carmen',
+                        'Ciudad' => 'Toluca',
+                        'Direccion' => 'AV. HIDALGO 345'
+                    ],
+                ],
+            
+                'YZA3242' => [
+                    'auto' => [
+                        'Marca' => 'Subaru',
+                        'Modelo' => 'Outback',
+                        'Tipo' => 'SUV',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Ricardo',
+                        'Ciudad' => 'Chihuahua',
+                        'Direccion' => 'CALLE 12 678'
+                    ],
+                ],
+            
+                'BCD5262' => [
+                    'auto' => [
+                        'Marca' => 'Jeep',
+                        'Modelo' => 'Wrangler',
+                        'Tipo' => 'SUV',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Patricia',
+                        'Ciudad' => 'Saltillo',
+                        'Direccion' => 'AV. REVOLUCION 901'
+                    ],
+                ],
+            
+                'EFG7282' => [
+                    'auto' => [
+                        'Marca' => 'Mercedes-Benz',
+                        'Modelo' => 'C-Class',
+                        'Tipo' => 'Sedan',
+                    ],
+                    'propietario' => [
+                        'Nombre' => 'Alejandro',
+                        'Ciudad' => 'Leon',
+                        'Direccion' => 'CALLE 20 234'
+                    ],
+                ],
+            );
+            
+            if(isset($_POST['todos']))
+            {
+                print_r($autos);
+            } else if(isset($_GET['matricula'])) {
+                print_r($autos[$matricula]);
+            }
+            
+        }
 ?>
