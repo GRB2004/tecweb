@@ -8,26 +8,26 @@
 <body>
     <h2>Ejercicio 1</h2>
     <p>Escribir programa para comprobar si un número es un múltiplo de 5 y 7</p>
-
-    <!-- Formulario para ingresar el número -->
-    <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
-        Número: <input type="text" name="numero"><br>
+    <form action="http://localhost/tecweb/practicas/p06/index.php" method="GET">
+        Numero: <input type="text" name="numero"><br>
         <input type="submit" name="submit">
     </form>
-
+    <br>
     <?php
-    // Verificar si el formulario ha sido enviado
-    // Incluir el archivo funciones.php
-    include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
-    if (isset($_POST['submit'])) {
-        if (isset($_POST['numero']) && !empty($_POST['numero'])) {
-            $numero = $_POST['numero'];
-            // Llamar a la función multiplo
-            multiplo($numero);
-        } else {
-            echo '<p>Por favor, ingresa un número.</p>';
-        }
-    }
+    /*
+         include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
+         numero();
+    */
+    ?>
+    <h2>Ejercicio 2</h2>
+    <p>Crea un programa para la generación repetitiva de 3 números aleatorios hasta obtener una secuencia compuesta</p>
+    <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
+        <input type="submit" name="submit">
+    </form>
+    <br>
+    <?php
+         include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
+         matriz();
     ?>
 </body>
 </html>
