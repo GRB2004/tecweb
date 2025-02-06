@@ -26,8 +26,60 @@
     </form>
     <br>
     <?php
+    /*
          include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
          matriz();
+    */
     ?>
+    <h2>Ejercicio 3</h2>
+    <p>Utiliza un ciclo while para encontrar el primer número entero obtenido aleatoriamente,
+pero que además sea múltiplo de un número dado.</p>
+    <form action="http://localhost/tecweb/practicas/p06/index.php" method="GET">
+        Numero: <input type="text" name="numero"><br>
+        <input type="submit" name="submit">
+    </form>
+    <br>
+    <?php
+         /*include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
+         primerAleatorio();
+         variante_aleatorio();*/
+    ?>
+
+    <h2>Ejercicio 4</h2>
+    <p>Crear un arreglo cuyos índices van de 97 a 122 y cuyos valores son las letras de la ‘a’
+a la ‘z’. Usa la función chr(n) que devuelve el caracter cuyo código ASCII es n para poner
+el valor en cada índice.</p>
+    <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
+        Numero: <input type="text" name="numero"><br>
+        <input type="submit" name="submit">
+    </form>
+    <br>
+    <?php
+        include 'C:/xampp/htdocs/tecweb/practicas/p06/src/funciones.php';
+        $arreglo = arreglo_ascii(); // Llamamos a la función
+        ?>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Clave</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($arreglo)): ?>
+                <?php foreach ($arreglo as $key => $value): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($key) ?></td>
+                        <td><?= htmlspecialchars($value) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2">No se ha generado ningún arreglo.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
 </body>
 </html>
