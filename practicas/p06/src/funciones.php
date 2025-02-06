@@ -317,10 +317,22 @@
             );
             
             if(isset($_POST['todos']))
-            {
+            {   
+                echo "<pre>";
+                echo "Todos los autos registrados <br>";
                 print_r($autos);
-            } else if(isset($_GET['matricula'])) {
-                print_r($autos[$matricula]);
+                echo "<pre>";
+            } else if(isset($_POST['matricula'])) {
+                // Buscar por matrícula
+                $matricula = $_POST['matricula']; 
+
+                if (array_key_exists($matricula, $autos)) {
+                    echo "<pre>";
+                    print_r($autos[$matricula]);
+                    echo "</pre>";
+                } else {
+                    echo "La matrícula '$matricula' no existe en el registro.";
+                }
             }
             
         }

@@ -107,7 +107,8 @@ una ciudad.</p>
     <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
         Ingrese la matricula: <input type="text" name="matricula"><br>
         <input type="submit" name="submit">
-        <br> 
+        <br>
+        Mostrar todos los autos registrados <br>
         <input type="submit" name="todos">
         <br>
     </form>
