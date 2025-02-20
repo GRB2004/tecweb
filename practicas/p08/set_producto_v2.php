@@ -31,6 +31,7 @@ $detalles = $_POST['detalles'];
 $unidades = $_POST['unidades'];
 $imagen   = 'img/imagen.png';
 
+
 // Validar que los datos no estén vacíos
 if (empty($nombre) || empty($marca) || empty($modelo) || empty($precio) || empty($detalles) || empty($unidades)) {
     die("Todos los campos son obligatorios.");
@@ -51,32 +52,19 @@ if (productoExiste($conn, $nombre, $marca, $modelo)) {
 }
 
 // Insertar el nuevo producto en la base de datos
-$sql = "INSERT INTO productos VALUES (null, '{$nombre}', '{$marca}', '{$modelo}', {$precio}, '{$detalles}', {$unidades}, '{$imagen}')";
+//$sql = "INSERT INTO productos VALUES (null, '{$nombre}', '{$marca}', '{$modelo}', {$precio}, '{$detalles}', {$unidades}, '{$imagen}', 0)";
+
+//Query usando column names
+$sql = "INSERT INTO productos (nombre,marca, modelo, precio, detalles, unidades, imagen) VALUES ('{$nombre}', '{$marca}', '{$modelo}', {$precio}, '{$detalles}', {$unidades}, '{$imagen}')";
+
 if ( $conn->query($sql) ) 
 {
-    echo 'Producto insertado con ID: '.$link->insert_id;
+    echo '<strong style="font-size: 50px;">Producto insertado exitosamente</strong>';
 }
 else
 {
 	echo 'El Producto no pudo ser insertado =(';
 }
-$stmt->bind_param("sssds", $nombre, $marca, $modelo, $precio, $detalles, $imagen);
 
-if ($stmt->execute()) {
-    echo "Producto insertado correctamente.<br>";
-    echo "Resumen del producto:<br>";
-    echo "Nombre: $nombre<br>";
-    echo "Marca: $marca<br>";
-    echo "Modelo: $modelo<br>";
-    echo "Precio: $precio<br>";
-    echo "Detalles: $detalles<br>";
-    echo "Detalles: $unidades<br>";
-    echo "Detalles: $imagen<br>";
-} else {
-    echo "Error al insertar el producto: " . $stmt->error;
-}
-
-// Cerrar la conexión
-$stmt->close();
 $conn->close();
 ?>
