@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario Productos</title>
+  <script>
+    function validarFormulario() {
+      // Obtener los valores de los campos
+      const nombre = document.getElementById('form-name').value.trim();
+      const marca = document.getElementById('form-marca').value.trim();
+      const modelo = document.getElementById('form-modelo').value.trim();
+      const precio = document.getElementById('form-precio').value.trim();
+      const detalles = document.getElementById('form-detalles').value.trim();
+
+      // Validar que los campos no estén vacíos
+      if (nombre === "" || marca === "" || modelo === "" || precio === "" || detalles === "") {
+        alert("Todos los campos son obligatorios.");
+        return false;
+      }
+
+      // Validar que el precio sea un número
+      if (isNaN(precio)) {
+        alert("El precio debe ser un número.");
+        return false;
+      }
+
+      // Validar la longitud de los detalles
+      if (detalles.length > 300) {
+        alert("Los detalles no deben exceder los 300 caracteres.");
+        return false;
+      }
+
+      // Si todo está bien, permitir el envío del formulario
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <form id="formulario_producto" method="post" action="http://localhost/tecweb/practicas/p08/set_producto_v2.php" onsubmit="return validarFormulario() ">
+    <fieldset>
+      <legend>Insertar Producto</legend>
+      <ul>
+        <li><label for="form-name">Nombre:</label> <input type="text" name="name" id="form-name"></li>
+        <li><label for="form-marca">Marca:</label> <input type="text" name="marca" id="form-marca"></li>
+        <li><label for="form-modelo">Modelo:</label> <input type="text" name="modelo" id="form-modelo"></li>
+        <li><label for="form-precio">Precio:</label> <input type="number" name="precio" id="form-precio"></li>
+        <li><label for="form-detalles">Detalles:</label><br><textarea  name="detalles" rows="4" cols="60" id="form-detalles" placeholder="No más de 300 caracteres de longitud"></textarea></li>
+        <li><label for="form-unidades">Unidades:</label> <input type="number" name="unidades" id="form-unidades"></li>
+      </ul>
+    </fieldset>
+
+    <p>
+      <input type="submit"  value="Enviar">
+      <input type="reset" value="Limpiar">
+    </p>
+  </form>
+</body>
+</html>

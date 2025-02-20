@@ -31,12 +31,10 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Productos</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 	</head>
 	<body>
-		<h3>PRODUCTOS CON UNIDADES MENORES O IGUALES A <?= $tope ?></h3>
-
-		<br/>
+		<h3>PRODUCTOS</h3>
 		
 		<?php if( isset($rows) && !empty($rows) ) : ?>
 
@@ -63,7 +61,7 @@
 						<td><?= $row['precio'] ?></td>
 						<td><?= $row['unidades'] ?></td>
 						<td><?= utf8_encode($row['detalles']) ?></td>
-						<td><img src="<?= $row['imagen'] ?>" width="100"></td>
+						<td><img src="<?= $row['imagen'] ?>" alt="producto" width="100"/></td>
 					</tr>
 					<?php endforeach; ?>
 				</tbody>
@@ -71,10 +69,15 @@
 
 		<?php elseif(!empty($tope)) : ?>
 
-			 <script>
-                alert('No se encontraron productos con unidades menores o iguales a <?= $tope ?>');
-             </script>
+			<script type="text/javascript">
+        alert('El ID del producto no existe');
+      </script>
 
 		<?php endif; ?>
+
+		<p>
+    <a href="https://validator.w3.org/markup/check?uri=referer"><img
+      src="https://www.w3.org/Icons/valid-xhtml11" alt="Valid XHTML 1.1" height="31" width="88" /></a>
+  </p>
 	</body>
 </html>
