@@ -12,11 +12,13 @@ function getDatos()
     div2.innerHTML = '<h3> Edad: '+edad+'</h3>';
 }
 
+// JS01 EJEMPLO PAG. 8
 function holaMundo()
 {
     document.getElementById("mensaje").innerHTML = "<h2>Hola Mundo</h2>";
 }
 
+//JS02 EJEMPLO PAG.6
 function variables() {
     var nombre = 'Juan';
     var edad = 10;
@@ -31,6 +33,7 @@ function variables() {
     `;
 }
 
+//JS02 EJEMPLO PAG 12.
 function obtenerDatos(){
     var nombre;
     var edad;
@@ -44,6 +47,7 @@ function obtenerDatos(){
 `;
 }
 
+//JS03 EJEMPLO PAG 3
 function sumaProducto() {
     var valor1;
     var valor2;
@@ -60,6 +64,7 @@ function sumaProducto() {
     `
 }
 
+//JS03 EJEMPLO PAG 8
 function nota() {
     var nombre;
     var nota;
@@ -70,6 +75,7 @@ function nota() {
     }
 }
 
+//JS03 EJEMPLO PAG 11
 function numeroMayor() {
     var num1,num2;
     num1 = prompt('Ingresa el primer número:', '');
@@ -84,6 +90,31 @@ function numeroMayor() {
     }
 }
 
+function convertirEntero() {
+    var nota1 = prompt('Ingresa 1ra. nota:', '');
+    var nota2 = prompt('Ingresa 2da. nota:', '');
+    var nota3 = prompt('Ingresa 3ra. nota:', '');
+
+    // Convertimos los valores a enteros
+    nota1 = parseInt(nota1);
+    nota2 = parseInt(nota2);
+    nota3 = parseInt(nota3);
+
+    // Calculamos el promedio
+    var pro = (nota1 + nota2 + nota3) / 3;
+
+    // Evaluamos el resultado
+    if (pro >= 7) {
+        document.write('Aprobado');
+    } else if (pro >= 4) {
+        document.write('Regular');
+    } else {
+        document.write('Reprobado');
+    }
+}
+
+
+//JS03 EJEMPLO PAG 18
 function rango() {
     var valor = prompt('Ingresar un valor comprendido entre 1 y 5:', '');
     valor = parseInt(valor); // Convertir a número
@@ -102,6 +133,8 @@ function rango() {
     document.getElementById("18").innerHTML = mensaje;
 }
 
+
+//JS03 EJEMPLO 21
 function pintarVentana(){
     var col;
     col = prompt('Ingresa el color con que quiera pintar el fondo de la ventana (rojo, verde, azul)', '');
@@ -115,6 +148,7 @@ function pintarVentana(){
     }
 }
 
+//JS04 EJEMPLO PAG s5
 function imprimirCien() {
     var x;
     x=1;
@@ -125,6 +159,7 @@ function imprimirCien() {
     }
 }
 
+// JS04 EJEMPLO PAG 6
 function sumarIngresados() {
     var x=1;
     var suma=0;
@@ -138,6 +173,8 @@ function sumarIngresados() {
     document.getElementById("r-p6").innerHTML = `<h2>La suma de los valores es ${suma}</h2>`;
 }
 
+
+// JS04 EJEMPLO PAG 12
 function numDigitos() {
     var valor;
     do {
@@ -159,6 +196,7 @@ function numDigitos() {
     } while (valor!=0);
 }
 
+// JS04 EJEMPLO PAG 16
 function rango10() {
     var f;
     for (f=1; f<=10; f++)
@@ -167,6 +205,7 @@ function rango10() {
     }
 }
 
+// JS05 EJEMPLO PAG 6
 function sinFuncion() {
     document.getElementById("f-6").innerHTML = `
         Cuidado<br>
@@ -178,6 +217,7 @@ function sinFuncion() {
     `
 }
 
+//JS05 EJEMPLO PAG 7
 function conFuncion() {
     var mensaje = document.createElement("div");
     mensaje.innerHTML = `
@@ -187,6 +227,7 @@ function conFuncion() {
     document.getElementById("f-7").appendChild(mensaje);
 }
 
+//JS04 EJEMPLO PAG 10
 function mostrarRango(x1,x2) {
     var inicio;
     for(inicio=x1; inicio<=x2; inicio++) {
@@ -194,7 +235,7 @@ function mostrarRango(x1,x2) {
     }
 }
 
-// Función de conversión (MODIFICADA PARA COMPARAR CORRECTAMENTE)
+//JS05 EJEMPLO PAG 13
 function convertirCastellano(x) {
     var resultado;
     if (x == 1) {
@@ -223,6 +264,7 @@ function convertirCastellano(x) {
     }
 }
 
+//JS05 PAG 15
 function convertirCastellanoDos(x) {
     // Convertimos el valor a número
     let numero = parseInt(x, 10);
