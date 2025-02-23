@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+    <script src="./src/main.js"></script>
+</head>
+<body>
+
+    <div id="nombre"></div>
+    <div id="edad"></div>
+    <input id="clickMe" type="button" value="clickme" onclick="getDatos();" />
+
+    <div id="mensaje">
+        <!--Ejemplo pág. 8-->
+        <h1>Hola Mundo</h1>
+        <input id="clickMe" type="button" value="clickme" onclick="holaMundo();" />
+    </div>
+    <!--Ejemplo pag. 6-->
+    <div id="resultado">
+        <h1>Variables</h1>
+        <input id="clickMe" type="button" value="clickme" onclick="variables();" />
+    </div>
+    <!--Ejemplo pág. 12-->
+    <div id="datos">
+        <h1>Entrada de datos</h1>
+        <input id="clickMe" type="button" value="clickme" onclick="obtenerDatos();" />
+    </div>
+
+    <div id="EstructurasCondicion">
+        <h1>Estructuras de condición</h1>
+        <div id="suma">
+        <h2>Suma Producto</h2>
+        <!--Ejemplo pág. 3-->
+        <input id="clickMe" type="button" value="clickme" onclick="sumaProducto();" />
+        </div>
+
+        <div id="notaif">
+            <h2>Aprobado</h2>
+            <!--Ejemplo pág. 8-->
+            <input id="clickMe" type="button" value="clickme" onclick="nota();" />
+        </div>
+
+        <div id="mayor">
+            <h2>Número Mayor</h2>
+            <!--Ejemplo pág. 11-->
+            <input id="clickMe" type="button" value="clickme" onclick="numeroMayor();" />
+        </div>
+
+        <div id="nota2">
+            <h2>Calificación 2</h2>
+            <!--Ejemplo pág. 15-16-->
+            <input id="clickMe" type="button" value="clickme" onclick="convertirEntero();" />
+        </div>
+
+        <div id="18">
+            <h2>Rango de números</h2>
+            <!--Ejemplo pág. 18-->
+            <input id="clickMe" type="button" value="clickme" onclick="rango();" />
+        </div>
+
+        <div id="21">
+            <h2>Pintar Ventana</h2>
+            <!--Ejemplo pág. 21-->
+            <input id="clickMe" type="button" value="clickme" onclick="pintarVentana();" />
+        </div>
+    </div>
+
+    <div id="estructuras_de_repeticion">
+        <!--Ejemplo pág. 5-->
+        <div>
+            <h2>100 números</h2>
+            <input id="clickMe" type="button" value="clickme" onclick="imprimirCien();" />
+        </div>
+    
+    <!--Ejemplo pág. 6-->
+        <div id="r-p6">
+            <h2>Sumar Ingresados</h2>
+            <input id="clickMe" type="button" value="clickme" onclick="sumarIngresados();" />
+        </div>
+
+    <!--Ejemplo pág. 12-->
+        <div id="r-p12">
+            <h2>Digitos</h2>
+            <input id="clickMe" type="button" value="clickme" onclick="numDigitos();" />
+        </div>
+
+    <!--Ejemplo pág. 16-->
+    <div id="r-p16">
+        <h2>Del 1 al 10</h2>
+        <input id="clickMe" type="button" value="clickme" onclick="rango10();" />
+    </div>
+    </div>
+    <br>
+    </div>
+
+    <div id="Funciones">
+        <!--Ejemplo pág. 6-->
+        <div id="f-6">
+            <h2>Repetir Cuidado</h2>
+            <input id="clickMe" type="button" value="clickme" onclick="sinFuncion();" />
+    </div>
+        </div>
+        <!--Ejemplo pág. 7-->
+        <div id="f-7">
+            <h2>Repetir Cuidado con funcion</h2>
+            <input id="clickMe" type="button" value="clickme" onclick="conFuncion();" />
+    </div>
+
+        <!--Ejemplo pág. 10-->
+        <div id="f-10">
+            <h2>Repetir desde</h2>
+            <input id="input1" type="number" value="10">
+            <input id="input2" type="number" value="20">
+            <input id="clickMe" type="button" value="clickme" onclick="mostrarRango(document.getElementById('input1').value, document.getElementById('input2').value);" />
+    </div>
+
+    <div id="f-13">
+        <h2>Convertir a Castellano</h2>
+        <!-- Ejemplo pag 13 -->
+        <input id="input3" type="number">
+        <input id="clickMe" type="button" value="clickme" onclick="convertirCastellano(input3.value);" />
+        
+    </div>
+
+    <div id="f-14">
+        <h2>Convertir a Castellano Switch</h2>
+        <input id="input4" type="number">
+        <input id="clickMe" type="button" value="clickme" onclick="convertirCastellanoDos(document.getElementById('input4').value);" />
+        <p id="resultado"></p> <!-- Aquí se mostrará el resultado -->
+    </div>
+    
+        </div>
+
+    
+</body>
+</html>
