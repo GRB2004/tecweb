@@ -12,7 +12,7 @@
     }
   </style>
   <script>
-    function show(event) {
+    function show() {
       // Se obtiene la fila donde se presionó el botón
       var row = event.target.closest("tr");
       var data = row.querySelectorAll(".row-data");
@@ -27,6 +27,8 @@
       // Para la imagen se obtiene el atributo src
       var imgElement = data[7].querySelector("img");
       var imagen = imgElement ? imgElement.getAttribute("src") : "";
+
+			alert("id " + id + "\nNombre:" + nombre + "\nMarca:" + marca + "\nModelo:" + modelo + "\nPrecio:" + precio + "\nUnidades" + unidades + "\nDetalles" + "\nimagen: " + imagen );
 
       // Enviar datos al formulario
       send2form(id, nombre, marca, modelo, precio, unidades, detalles, imagen);
@@ -168,7 +170,7 @@
         <td class="row-data"><?= $row['unidades'] ?></td>
         <td class="row-data"><?= utf8_encode($row['detalles']) ?></td>
         <td class="row-data"><img src="<?= $row['imagen'] ?>" alt="producto" width="100"/></td>
-        <td><button onclick="show(event)" type="button">Modificar</button></td>
+        <td><button onclick="show()" type="button">Modificar</button></td>
       </tr>
       <?php endforeach; ?>
     </tbody>
