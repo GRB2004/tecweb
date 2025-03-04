@@ -13,17 +13,46 @@ if ($data) {
     $unidades = intval($data['unidades']);
     $imagen = $conexion->real_escape_string($data['imagen']);
 
-    $sql = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen) 
-            VALUES ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen')";
+    // Validar existencia del producto
+    $sqlCheck = "SELECT id 
+                FROM productos 
+                WHERE eliminado = 0 
+                AND (
+                    (nombre = '$nombre' AND marca = '$marca') 
+                    OR 
+                    (marca = '$marca' AND modelo = '$modelo')
+                )";
+    $result = $conexion->query($sqlCheck);
 
-    if ($conexion->query($sql)) {
-        echo json_encode(['success' => true, 'message' => 'Producto insertado exitosamente']);
-        echo '<h2>Producto Insertado Exitosamente</h2>';
+    if ($result->num_rows > 0) {
+        // Producto ya existe
+        echo json_encode([
+            'success' => false,
+            'message' => 'Producto duplicado: Ya existe un registro activo con estos datos'
+        ]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Error al insertar: ' . $conexion->error]);
+        $sqlInsert = "INSERT INTO productos 
+                    (nombre, marca, modelo, precio, detalles, unidades, imagen) 
+                    VALUES 
+                    ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen')";
+
+        if ($conexion->query($sqlInsert)) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Producto insertado exitosamente'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Error al insertar: ' . $conexion->error
+            ]);
+        }
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Datos inválidos']);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Datos inválidos'
+    ]);
 }
 
 $conexion->close();

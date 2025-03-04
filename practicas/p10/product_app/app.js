@@ -136,6 +136,18 @@ function agregarProducto(e) {
         }
     };
     client.send(productoJsonString);
+
+    client.onreadystatechange = function() {
+        if (client.readyState === 4 && client.status === 200) {
+            const response = JSON.parse(client.responseText);
+            window.alert(response.message);
+            
+            if (response.success) {
+                // Recargar lista de productos o limpiar formulario
+                document.getElementById('task-form').reset();
+            }
+        }
+    };
 }
 
 // SE CREA EL OBJETO DE CONEXIÓN COMPATIBLE CON EL NAVEGADOR
