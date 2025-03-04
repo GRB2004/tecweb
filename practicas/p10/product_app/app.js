@@ -111,6 +111,11 @@ function buscarProducto(e) {
 function agregarProducto(e) {
     e.preventDefault();
 
+    if (!validarFormulario()) {
+        console.log("Error al Insertar");
+        return false;
+    }
+
     // SE OBTIENE DESDE EL FORMULARIO EL JSON A ENVIAR
     var productoJsonString = document.getElementById('description').value;
     // SE CONVIERTE EL JSON DE STRING A OBJETO
