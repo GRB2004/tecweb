@@ -125,6 +125,8 @@ $(document).ready(function() {
                 
                 listarProductos();
                 $('#product-form').trigger('reset');
+                edit = false;
+                init()
             })
             .fail(function(xhr) {
                 const error = xhr.responseJSON || { status: 'error', message: 'Error en el servidor' };
