@@ -1,31 +1,46 @@
 <?php
+  include_once __DIR__.'/database.php';
 
-include_once __DIR__.'/database.php';
+  $id = $_POST['id'];
 
-$id = $_POST['id'];
+  $query = "SELECT 
+              id,
+              nombre,
+              precio,
+              unidades,
+              modelo,
+              marca,
+              detalles,
+              imagen 
+            FROM productos 
+            WHERE id = ?";
+  $stmt = $conexion->prepare($query);
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
 
-// Usar sentencias preparadas para evitar SQL injection
-$query = "SELECT nombre, detalles, id FROM productos WHERE id = ?";
-$stmt = $conexion->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
+  $result = $stmt->get_result();
 
-$result = $stmt->get_result();
-if (!$result) {
-    die('Consulta fallida');
-}
+  if ($row = $result->fetch_assoc()) {
+      $nombre = $row['nombre'];
+      $json = array(
+          'precio'   => $row['precio'],
+          'unidades' => $row['unidades'],
+          'modelo'   => $row['modelo'],
+          'marca'    => $row['marca'],
+          'detalles' => $row['detalles'],
+          'imagen'   => $row['imagen']
+      );
 
-$json = array();
-if ($row = $result->fetch_assoc()) {
-    $json[] = array(
-        'name' => $row['nombre'],
-        'description' => $row['detalles'],
-        'id' => $row['id']
-    );
-}
+      // Incluimos el id en la respuesta JSON
+      $output = array(
+          'id'     => $row['id'],
+          'nombre' => $nombre,
+          'json'   => $json
+      );
 
-$jsonstring = json_encode($json[0]);
-echo $jsonstring;
-
+      echo json_encode($output);
+  }
 ?>
+
+
 
