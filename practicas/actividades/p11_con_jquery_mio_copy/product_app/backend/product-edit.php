@@ -1,92 +1,57 @@
 <?php
-  // product-edit.php
+    include_once __DIR__.'/database.php';
 
-  // Indicamos que la respuesta se devolverá como JSON
-  header('Content-Type: application/json; charset=utf-8');
+    // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
+    $data = array(
+        'status'  => 'error',
+        'message' => 'La consulta falló'
+    );
 
-  include_once __DIR__.'/database.php';
-
-  // 1. Leemos el cuerpo crudo de la petición (en formato JSON)
-  $rawData = file_get_contents('php://input');
-  $data = json_decode($rawData, true);
-
-  // 2. Validamos que exista contenido JSON válido
-  if (!$data) {
-      echo json_encode([
-          'status'  => 'error',
-          'message' => 'No se recibió JSON válido'
-      ]);
-      exit;
-  }
-
-  // 3. Extraemos campos desde el array $data
-  //    Ajusta estos nombres a lo que envías desde tu JavaScript
-  $productId = isset($data['productId']) ? (int)$data['productId'] : null;
-  $nombre    = isset($data['nombre'])    ? trim($data['nombre'])    : '';
-  $precio    = isset($data['precio'])    ? (float)$data['precio']   : 0;
-  $unidades  = isset($data['unidades'])  ? (int)$data['unidades']   : 0;
-  $modelo    = isset($data['modelo'])    ? trim($data['modelo'])    : '';
-  $marca     = isset($data['marca'])     ? trim($data['marca'])     : '';
-  $detalles  = isset($data['detalles'])  ? trim($data['detalles'])  : '';
-  $imagen    = isset($data['imagen'])    ? trim($data['imagen'])    : '';
-
-  // 4. Validamos si falta algún campo importante (por ejemplo, el ID del producto)
-  if (!$productId) {
-      echo json_encode([
-          'status'  => 'error',
-          'message' => 'No se proporcionó un ID de producto válido'
-      ]);
-      exit;
-  }
-
-  // 5. Preparamos la consulta para editar el producto
-  //    Ajusta las columnas y su orden a tu tabla de "productos"
-  $query = "UPDATE productos
-            SET nombre = ?,
-                precio = ?,
-                unidades = ?,
-                modelo = ?,
-                marca = ?,
-                detalles = ?,
-                imagen = ?
-            WHERE id = ?";
-
-  $stmt = $conexion->prepare($query);
-  if (!$stmt) {
-      echo json_encode([
-          'status'  => 'error',
-          'message' => 'Error al preparar la consulta: ' . $conexion->error
-      ]);
-      exit;
-  }
-
-  // 6. Asociamos parámetros a la consulta
-  //    - s: string
-  //    - d: double (float)
-  //    - i: integer
-  //    - Si el orden cambia, ajusta correspondientemente
-  $stmt->bind_param("sdissssi",
-      $nombre,    // s
-      $precio,    // d (float)
-      $unidades,  // i
-      $modelo,    // s
-      $marca,     // s
-      $detalles,  // s
-      $imagen,    // s
-      $productId  // i
-  );
-
-  // 7. Ejecutamos la consulta
-  if ($stmt->execute()) {
-      echo json_encode([
-          'status'  => 'success',
-          'message' => 'Producto editado correctamente'
-      ]);
-  } else {
-      echo json_encode([
-          'status'  => 'error',
-          'message' => 'Error al editar el producto: ' . $stmt->error
-      ]);
-  }
-
+    // SE VERIFICA HABER RECIBIDO EL ID
+    if(isset($_POST['id'])) {
+        // Usando directamente las variables POST
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $marca = $_POST['marca'];
+        $modelo = $_POST['modelo'];
+        $precio = $_POST['precio'];
+        $detalles = $_POST['detalles'];
+        $unidades = $_POST['unidades'];
+        $imagen = $_POST['imagen'];
+        
+        // Escapar variables para prevenir inyección SQL
+        $conexion->set_charset("utf8");
+        $id = $conexion->real_escape_string($id);
+        $nombre = $conexion->real_escape_string($nombre);
+        $marca = $conexion->real_escape_string($marca);
+        $modelo = $conexion->real_escape_string($modelo);
+        $precio = $conexion->real_escape_string($precio);
+        $detalles = $conexion->real_escape_string($detalles);
+        $unidades = $conexion->real_escape_string($unidades);
+        $imagen = $conexion->real_escape_string($imagen);
+        
+        // Construir la consulta SQL
+        $sql = "UPDATE productos SET 
+                nombre='$nombre', 
+                marca='$marca', 
+                modelo='$modelo', 
+                precio=$precio, 
+                detalles='$detalles', 
+                unidades=$unidades, 
+                imagen='$imagen' 
+                WHERE id=$id";
+                
+        // Ejecutar la consulta
+        if($conexion->query($sql)) {
+            $data['status'] = "success";
+            $data['message'] = "Producto actualizado";
+        } else {
+            $data['message'] = "ERROR: No se ejecutó $sql. " . mysqli_error($conexion);
+        }
+        
+        $conexion->close();
+    } 
+    
+    // SE HACE LA CONVERSIÓN DE ARRAY A JSON
+    echo json_encode($data, JSON_PRETTY_PRINT);
 ?>

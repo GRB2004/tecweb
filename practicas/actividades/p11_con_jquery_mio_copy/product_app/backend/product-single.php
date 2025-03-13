@@ -1,45 +1,31 @@
 <?php
-  include_once __DIR__.'/database.php';
+    include_once __DIR__.'/database.php';
 
-  $id = $_POST['id'];
+    // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
+    $data = array();
 
-  $query = "SELECT 
-              id,
-              nombre,
-              precio,
-              unidades,
-              modelo,
-              marca,
-              detalles,
-              imagen 
-            FROM productos 
-            WHERE id = ?";
-  $stmt = $conexion->prepare($query);
-  $stmt->bind_param("i", $id);
-  $stmt->execute();
+    if( isset($_POST['id']) ) {
+        $id = $_POST['id'];
+        // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
+        if ( $result = $conexion->query("SELECT * FROM productos WHERE id = {$id}") ) {
+            // SE OBTIENEN LOS RESULTADOS
+            $row = $result->fetch_assoc();
 
-  $result = $stmt->get_result();
+            if(!is_null($row)) {
+                // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
+                foreach($row as $key => $value) {
+                    $data[$key] = utf8_encode($value);
+                }
+            }
+            $result->free();
+        } else {
+            die('Query Error: '.mysqli_error($conexion));
+        }
+        $conexion->close();
+    }
 
-  if ($row = $result->fetch_assoc()) {
-      $nombre = $row['nombre'];
-      $json = array(
-          'precio'   => $row['precio'],
-          'unidades' => $row['unidades'],
-          'modelo'   => $row['modelo'],
-          'marca'    => $row['marca'],
-          'detalles' => $row['detalles'],
-          'imagen'   => $row['imagen']
-      );
-
-      // Incluimos el id en la respuesta JSON
-      $output = array(
-          'id'     => $row['id'],
-          'nombre' => $nombre,
-          'json'   => $json
-      );
-
-      echo json_encode($output);
-  }
+    // SE HACE LA CONVERSIÓN DE ARRAY A JSON
+    echo json_encode($data, JSON_PRETTY_PRINT);
 ?>
 
 
