@@ -105,9 +105,11 @@ function validarNombre() {
     const errorLabel = $("#nameError");
 
     if (nombre === '') {
+        $('#name').css('border', '1px solid red');
         errorLabel.text('El campo nombre es obligatorio').removeClass('hidden').css('color', 'red');
         return false;
     } else {
+        $('#name').css('border', '1px solid green');
         errorLabel.addClass('hidden');
         return true;
     }
@@ -118,9 +120,11 @@ function validarMarca() {
     const marca = $("#marca").val();
     const errorLabel = $("#marcaError");
     if (marca === '') {
+        $('#marca').css('border', '1px solid red');
         errorLabel.text('El campo marca es obligatorio').removeClass('hidden').css('color', 'red');
         return false;
     } else {
+        $('#marca').css('border', '1px solid green');
         errorLabel.addClass('hidden');
         return true;
     }
@@ -132,9 +136,11 @@ function validarModelo() {
     const errorLabel = $("#modeloError");
 
     if (modelo === '' || !regex.test(modelo)) {
+        $('#modelo').css('border', '1px solid red');
         errorLabel.text('El campo modelo es obligatorio y debe ser alfánumerico').removeClass('hidden').css('color', 'red');
         return false;
     } else {
+        $('#modelo').css('border', '1px solid green');
         errorLabel.addClass('hidden');
         return true;
     }
@@ -144,9 +150,11 @@ function validarPrecio() {
     const precio = parseFloat($("#precio").val());
     const errorLabel = $("#precioError");
     if (isNaN(precio) || precio <= 99.99) {
+        $('#precio').css('border', '1px solid red');
         errorLabel.text('El campo nombre es obligatorio y debe ser mayor a 99.99').removeClass('hidden').css('color', 'red');
         return false;
     } else {
+        $('#precio').css('border', '1px solid green');
         errorLabel.addClass('hidden');
         return true;
     }
@@ -156,9 +164,11 @@ function validarDetalles() {
     const detalles = $("#description").val().trim();
     const errorLabel = $("#detallesError");
     if (detalles.length > 250) {
+        $('#description').css('border', '1px solid red');
         errorLabel.text('No debe ser mayor a 250 caracteres').removeClass('hidden').css('color', 'red');
         return false;
     } else {
+        $('#description').css('border', '1px solid green');
         errorLabel.addClass('hidden');
         return true;
     }
@@ -168,9 +178,11 @@ function validarUnidades() {
     const unidades = parseInt($("#unidades").val());
     const errorLabel = $("#unidadesError");
     if (isNaN(unidades) || unidades < 0) {
+        $('#unidades').css('border', '1px solid red');
         errorLabel.text('El campo nombre es obligatorio').removeClass('hidden').css('color', 'red');
         return false;
     } else {
+        $('#unidades').css('border', '1px solid green');
         errorLabel.addClass('hidden');
         return true;
     }
@@ -321,6 +333,10 @@ $(document).ready(function() {
                         productos.forEach(producto => {
                             if (producto.nombre != nombre_insertado) {
                                 template += `<li class="suggestion-item" style="color: black;">${producto.nombre}</li>`;
+                                setTimeout(function() {
+                                    $('#suggestions').addClass('hidden');
+                                }, 1000); 
+                                
                             } else {
                                 template += `<li class="suggestion-item" style="color: black;">El nombre ya existe</li>`;
                             }
@@ -331,6 +347,11 @@ $(document).ready(function() {
                         $('#suggestions ul').css('list-style', 'none');
                     } else {
                         $('#suggestions').html('<p style="color: black;">Sin coincidencias</p>').removeClass('hidden');
+
+                        // Opcionalmente, puedes ocultar el mensaje después de un tiempo
+                    setTimeout(function() {
+                        $('#suggestions').addClass('hidden');
+                    }, 1000); 
                     }
                 }
             }
