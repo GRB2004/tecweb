@@ -12,7 +12,7 @@
 
     $pag1 = new Pagina('El ático del programador', "El sótano del Programador");
     for ($i=0; $i<15; $i++) {
-      $pag1->insertar_cuerpo('Este es el parrafo No.'.($i).' que debe aparecer en la Página.');
+      $pag1->insertar_cuerpo('Este es el parrafo No.'.($i+1).' que debe aparecer en la Página.');
     }
 
     $pag1->graficar();

@@ -24,7 +24,7 @@ class Tabla {
     }
 
     private function mostrar_dato($row, $col) {
-      echo '<td style"'.this->$estilo.'">';
+      echo '<td style"'.$this->estilo.'">';
       echo $this->matriz[$row][$col];
       echo '</td>';
     }
@@ -37,7 +37,7 @@ class Tabla {
       echo '</table>';
     }
 
-    private function graficar() {
+    public function graficar() {
       $this->inicio_tabla();
       for ($i=0; $i<$this->numFilas; $i++) {
         $this->inicio_fila();
