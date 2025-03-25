@@ -397,7 +397,7 @@ $(document).ready(function() {
         let name = $(elementName).attr('productId');
         $('button.btn-primary').text("Modificar Producto");
         //'./backend/product-single.php'
-        $.post('./backend/product-by-name.php', {name}, function(response) {
+        $.post('./backend/product-single.php', {id}, function(response) {
             const product = JSON.parse(response);
             // Actualiza estos selectores según tu interfaz
             $('#name').val(product.nombre);

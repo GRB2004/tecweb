@@ -58,26 +58,28 @@ class Products extends DataBase {
     $this->data = array();
     // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
     if ( $result = $this->conexion->query("SELECT * FROM productos WHERE id = {$id}") ) {
-      // SE OBTIENEN LOS RESULTADOS
-      $row = $result->fetch_assoc();
+        // SE OBTIENEN LOS RESULTADOS
+        $row = $result->fetch_assoc();
 
-      if(!is_null($row)) {
-          // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
-          foreach($row as $key => $value) {
-              $this->data[$key] = utf8_encode($value);
-          }
-      }
-      $result->free();
-  } else {
-      die('Query Error: '.mysqli_error($this->conexion));
-  }
-  $this->conexion->close();
+        if(!is_null($row)) {
+            // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
+            foreach($row as $key => $value) {
+                $this->data[$key] = utf8_encode($value);
+            }
+        } else {
+            $this->data['error'] = 'Producto no encontrado';
+        }
+        $result->free();
+    } else {
+        $this->data['error'] = 'Query Error: '.mysqli_error($this->conexion);
+    }
+    $this->conexion->close();
   }
 
   public function singleByName($nombre) {
     $this->data = array();
     // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
-    if ( $result = $this->conexion->query("SELECT * FROM productos WHERE nombre = {$nombre}") ) {
+    if ( $result = $this->conexion->query("SELECT * FROM productos WHERE nombre = '{$nombre}'") ) {
       // SE OBTIENEN LOS RESULTADOS
       $row = $result->fetch_assoc();
 
