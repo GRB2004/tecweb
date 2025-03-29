@@ -1,5 +1,5 @@
 <?php
-namespace TECWEB\A07_MVC;
+namespace TECWEB\Model;
 abstract class DataBase {
   protected $conexion;
   public function __construct($user, $pass, $db) {

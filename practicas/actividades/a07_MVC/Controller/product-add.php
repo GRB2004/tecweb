@@ -1,7 +1,7 @@
 <?php
 
-use TECWEB\CONTROLLER\ProductsController as ProductsController;
-require_once __DIR__ . '/Controller/ProductsController.php';
+    use TECWEB\CONTROLLER\ProductsController as ProductsController;
+    require_once 'ProductsController.php';
 
 // Se crea la instancia de Products
 $prodObj = new ProductsController('root', '23102005','marketzone');

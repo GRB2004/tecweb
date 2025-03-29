@@ -32,7 +32,7 @@ function buscarProducto() {
     
         // Verificamos que el campo no esté vacío
         $.ajax({
-            url: './Controller/product-search.php',
+            url: './../Controller/product-search.php',
             type: 'GET',
             data: { search: search },
             dataType: 'json',
@@ -258,7 +258,7 @@ $(document).ready(function() {
 
             if (nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas) {
                 
-                let url = edit === false ? './Controller/product-add.php' : './Controller/product-edit.php';
+                let url = edit === false ? './../Controller/product-add.php' : './../Controller/product-edit.php';
             console.log(url);
 
             $.ajax({
@@ -320,7 +320,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: './Controller/product-search.php',
+            url: './../Controller/product-search.php',
             type: 'GET',
             data: { search: searchQuery },
             success: function (response) {
@@ -364,7 +364,7 @@ $(document).ready(function() {
             let element = $(this).closest('tr');
             let id = element.attr('productId');
     
-            $.get('./Controller/product-delete.php', { id: id }, function (response) {
+            $.get('./../Controller/product-delete.php', { id: id }, function (response) {
                 // Convertir la respuesta a objeto JSON (necesario si el servidor no envía cabeceras JSON)
                 let respuesta = typeof response === 'string' ? JSON.parse(response) : response;
                 
@@ -397,7 +397,7 @@ $(document).ready(function() {
         let name = $(elementName).attr('productId');
         $('button.btn-primary').text("Modificar Producto");
         //'./backend/product-single.php'
-        $.post('./Controller/product-single.php', {id}, function(response) {
+        $.post('./../Controller/product-single.php', {id}, function(response) {
             const product = JSON.parse(response);
             // Actualiza estos selectores según tu interfaz
             $('#name').val(product.nombre);
@@ -425,7 +425,7 @@ $(document).ready(function() {
 
     function listarProductos() {
         $.ajax({
-            url: './Controller/product-list.php',
+            url: './../Controller/product-list.php',
             type: 'GET',
             success: function (response) {
                 let products = JSON.parse(response);

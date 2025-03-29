@@ -1,8 +1,8 @@
 <?php
-namespace TECWEB\A07_MVC;
+namespace TECWEB\Controller;
 
 use TECWEB\MODEL\DataBase as DataBase;
-require_once __DIR__ . 'Model/Database.php';
+require_once __DIR__ . '/../Model/Database.php';
 
 class ProductsController extends DataBase {
   private $data = NULL;

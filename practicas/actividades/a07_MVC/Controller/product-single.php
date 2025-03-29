@@ -1,8 +1,7 @@
 <?php
 
-
     use TECWEB\CONTROLLER\ProductsController as ProductsController;
-    require_once __DIR__ . '/Controller/ProductsController.php';
+    require_once 'ProductsController.php';
 
     $prodObj = new ProductsController('root', '23102005','marketzone');
     
@@ -44,6 +43,9 @@
     echo json_encode($data, JSON_PRETTY_PRINT);
 */
 ?>
+
+
+
 
 
 
