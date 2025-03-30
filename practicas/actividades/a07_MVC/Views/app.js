@@ -226,7 +226,7 @@ $(document).ready(function() {
 
             if (nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas) {
                 
-                let url = edit === false ? './../Controller/product-add.php' : './../Controller/product-edit.php';
+                let url = edit === false ? './products/product-add.php' : './../Controller/product-edit.php';
             console.log(url);
 
             $.ajax({
@@ -256,6 +256,7 @@ $(document).ready(function() {
             })
             .fail(function(xhr) {
                 const error = xhr.responseJSON || { status: 'error', message: 'Error en el servidor' };
+                console.log(error);
                 $('#container').html(`
                     <li style="list-style: none;">status: ${error.status}</li>
                     <li style="list-style: none;">message: ${error.message}</li>
@@ -278,12 +279,13 @@ $(document).ready(function() {
         }
     });
 
-    //Para mostrar los nombres que fueron agregados anteriormente
-    $(document).on('input', '#name', function () {
-        let searchQuery = $(this).val().trim();
-        let nombreIngresado = searchQuery;
+    //Para mostrar los nombre que fueron agregados anteriormente
+
+    $(document).on('input', '#name', function() {
+        const $input = $(this);
+        const searchQuery = $input.val().trim();
         
-        if (searchQuery.length === 0) {
+        if(searchQuery.length === 0) {
             $('#suggestions').html('').addClass('hidden');
             return;
         }
@@ -293,28 +295,39 @@ $(document).ready(function() {
             type: 'GET',
             data: { 
                 search: searchQuery,
-                current_name: nombreIngresado 
+                current_name: searchQuery // Enviar nombre actual para validación
             },
             success: function(html) {
-                $('#suggestions').html(html).removeClass('hidden');
+                $('#suggestions')
+                    .html(html)
+                    .removeClass('hidden')
+                    .css({
+                        'position': 'absolute',
+                        'z-index': '1000',
+                        'background': 'white',
+                        'width': $input.outerWidth() + 'px'
+                    });
                 
-                // Ocultar después de 1 segundo sin interactuar
-                $('#suggestions').data('timer', setTimeout(function() {
+                // Ocultar después de 1 segundo sin interacción
+                let timer = setTimeout(() => {
                     $('#suggestions').addClass('hidden');
-                }, 6000));
+                }, 1000);
+                
+                $('#suggestions').hover(
+                    () => clearTimeout(timer),
+                    () => timer = setTimeout(() => $('#suggestions').addClass('hidden'), 500)
+                );
             },
-            error: function(xhr, status, error) {
-                console.error("Error cargando sugerencias:", error);
-                $('#suggestions').html('<p class="text-danger">Error cargando sugerencias</p>');
+            error: function(xhr) {
+                $('#suggestions').html('<div class="text-danger">Error cargando sugerencias</div>');
             }
         });
     });
     
-    // Mantener visible al interactuar con las sugerencias
-    $(document).on('mouseenter', '#suggestions', function() {
-        clearTimeout($(this).data('timer'));
-    }).on('mouseleave', '#suggestions', function() {
-        $(this).data('timer', setTimeout(() => $(this).addClass('hidden'), 500));
+    // Seleccionar sugerencia
+    $(document).on('click', '.suggestion-item', function() {
+        $('#name').val($(this).text().replace('El nombre ya existe', '').trim());
+        $('#suggestions').addClass('hidden');
     });
 
     // Eliminar productos

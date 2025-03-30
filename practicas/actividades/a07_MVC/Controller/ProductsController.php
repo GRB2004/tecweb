@@ -2,15 +2,20 @@
 namespace TECWEB\Controller;
 
 use TECWEB\MODEL\DataBase as DataBase;
+//use TECWEB\MODEL\Producto as Producto;
 require_once __DIR__ . '/../Model/Database.php';
+//require_once __DIR__ . '/../Model/Producto.php';
 require_once __DIR__ . '/../Views/ProductView.php';
+
 class ProductsController extends DataBase {
   private $data = NULL;
   private $view;
+  //private $productoModel;
   public function __construct($user='root', $pass='23102005', $db) {
     $this->data = array();
     parent::__construct($user, $pass, $db);
     $this->view = new \ProductView();
+    $this->productoModel = null;
   }
 
   public function list() {
@@ -58,14 +63,18 @@ class ProductsController extends DataBase {
     } 
   }
 
-  public function sugerenciasNombres($searchTerm, $nombreIngresado) {
+  // En ProductsController.php
+  public function sugerenciasNombres($search) {
     $this->data = array();
-    $searchTerm = $this->conexion->real_escape_string($searchTerm);
+    $nombreIngresado = $_GET['current_name'] ?? '';
+    $search = $this->conexion->real_escape_string($search);
     
-    $sql = "SELECT nombre FROM productos 
-            WHERE nombre LIKE '%$searchTerm%' 
-            AND eliminado = 0
-            ORDER BY nombre ASC
+    // Query optimizado para sugerencias
+    $sql = "SELECT nombre 
+            FROM productos 
+            WHERE nombre LIKE '%{$search}%' 
+            AND eliminado = 0 
+            ORDER BY nombre ASC 
             LIMIT 5";
 
     if ($result = $this->conexion->query($sql)) {

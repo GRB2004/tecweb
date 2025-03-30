@@ -6,49 +6,35 @@
     <!-- BOOTSTRAP 4  -->
     <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
     <style>
-      .hidden {
-        display: none;
-      }
-      #suggestions ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .form-group {
-        position: relative; /* Para que los elementos absolutos se posicionen relativo a este contenedor */
+            .suggestions-container {
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          max-height: 200px;
+          overflow-y: auto;
       }
 
-      .suggestions-container {
-        position: absolute;
-        top: 100%;  /* Justo debajo del input */
-        left: 0;
-        right: 0;
-        background: #fff;
-        border: 1px solid #ccc;
-        z-index: 1000;
-        max-height: 200px; /* Opcional: para limitar la altura */
-        overflow-y: auto;  /* Opcional: para agregar scroll si hay muchos elementos */
-        padding: 5px;
+      .suggestion-item {
+          padding: 8px 12px;
+          cursor: pointer;
+          transition: background 0.2s;
+          color: black;
       }
 
-      .suggestions-container ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+      ul {
+        list-style-type: none;
       }
 
-      .suggestions-container ul li {
-        padding: 8px;
-        cursor: pointer;
+      .suggestion-item:hover {
+          background-color: #f8f9fa;
       }
 
-      .suggestions-container ul li:hover {
-        background: #f0f0f0;
+      .text-danger {
+          color: #dc3545 !important;
       }
 
       .hidden {
-        display: none;
+          display: none !important;
       }
 
     </style>

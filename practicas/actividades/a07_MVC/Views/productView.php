@@ -105,13 +105,17 @@ public function mostrarSugerencias($productos, $nombreIngresado) {
   ob_start();
   ?>
   <div id="suggestions" class="suggestions-container">
-      <?php if(count($productos) > 0): ?>
+      <?php if(!empty($productos)): ?>
           <ul>
               <?php foreach($productos as $producto): ?>
-                  <?php if($producto['nombre'] != $nombreIngresado): ?>
-                      <li class="suggestion-item"><?= htmlspecialchars($producto['nombre']) ?></li>
+                  <?php if($producto['nombre'] !== $nombreIngresado): ?>
+                      <li class="suggestion-item">
+                          <?= htmlspecialchars($producto['nombre']) ?>
+                      </li>
                   <?php else: ?>
-                      <li class="suggestion-item text-danger">El nombre ya existe</li>
+                      <li class="suggestion-item text-danger">
+                          <i class="fas fa-exclamation-circle"></i> El nombre ya existe
+                      </li>
                   <?php endif; ?>
               <?php endforeach; ?>
           </ul>
@@ -133,12 +137,6 @@ public function mostrarSugerencias($productos, $nombreIngresado) {
       return ob_get_clean();
   }
 
-    public function mostrarNotificacion($tipo, $mensaje) {
-        $this->renderTemplate('notification.php', [
-            'tipo' => $tipo,
-            'mensaje' => $mensaje
-        ]);
-    }
 
     private function renderTemplate($template, $data = []) {
         extract($data);
