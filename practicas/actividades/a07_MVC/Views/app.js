@@ -43,7 +43,7 @@ $(document).ready(function() {
     
         // Solo hacer la petición si hay término de búsqueda
         $.ajax({
-            url: './products/product-search.php',
+            url: './../Controller/product-search.php',
             type: 'GET',
             data: { search: searchTerm },
             success: function(html) {
@@ -226,43 +226,41 @@ $(document).ready(function() {
 
             if (nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas) {
                 
-                let url = edit === false ? './products/product-add.php' : './../Controller/product-edit.php';
-            console.log(url);
+                let url = edit === false ? './../Controller/product-add.php' : './../Controller/product-edit.php';
+console.log(url);
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: datosProducto,
-                dataType: 'json'
-            })
-            .done(function(respuesta) {
-                // Mostrar notificación
-                console.log(respuesta);
-                const template = `
-                    <li style="list-style: none;">status: ${respuesta.status}</li>
-                    <li style="list-style: none;">message: ${respuesta.message}</li>
-                    <li style="list-style: none;">status: Validación exitosa</li>
-                `;
-                
-                $('#product-result')
-                    .removeClass('d-none')
-                    .addClass('card my-4 d-block')
-                    .find('#container').html(template);
-                
-                listarProductos();
-                $('#product-form').trigger('reset');
-                $('button.btn-primary').text("Agregar Producto");
-                edit = false;
-            })
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: datosProducto,
+            dataType: 'json'
+        })
+        .done(function(respuesta) {
+            // Mostrar notificación
+            console.log(respuesta);
+            
+            // Usar el HTML generado por el servidor
+            $('#product-result')
+                .removeClass('d-none')
+                .addClass('card my-4 d-block')
+                .find('#container').html(respuesta.html);
+            
+            listarProductos();
+            $('#product-form').trigger('reset');
+            $('button.btn-primary').text("Agregar Producto");
+            edit = false;
+        })
             .fail(function(xhr) {
                 const error = xhr.responseJSON || { status: 'error', message: 'Error en el servidor' };
                 console.log(error);
-                $('#container').html(`
-                    <li style="list-style: none;">status: ${error.status}</li>
-                    <li style="list-style: none;">message: ${error.message}</li>
-                    
+                
+                // Mostrar el HTML de error si está disponible, o un mensaje genérico
+                $('#container').html(error.html || `
+                    <li style="list-style: none;">status: error</li>
+                    <li style="list-style: none;">message: ${error.message || 'Error desconocido'}</li>
                 `);
-                $('#product-result').addClass('d-block');
+                
+                $('#product-result').removeClass('d-none').addClass('d-block');
             });
                 
             } else {
@@ -272,12 +270,18 @@ $(document).ready(function() {
                 `);
                 $('#product-result').addClass('d-block');
             }
-            
-        } catch (error) {
-            // Manejar errores de validación/parseo
-            
-        }
-    });
+
+            } catch (error) {
+                // Manejar errores de validación/parseo
+                $('#container').html(`
+                <li style="list-style: none;">status: error</li>
+                <li style="list-style: none;">message: ${error.message || 'Error en la validación'}</li>
+                `);
+                $('#product-result')
+                    .removeClass('d-none')
+                    .addClass('card my-4 d-block');
+            }
+        });
 
     //Para mostrar los nombre que fueron agregados anteriormente
 
@@ -291,7 +295,7 @@ $(document).ready(function() {
         }
     
         $.ajax({
-            url: './products/product-sugerencias.php',
+            url: './../Controller/product-sugerencias.php',
             type: 'GET',
             data: { 
                 search: searchQuery,
@@ -336,29 +340,18 @@ $(document).ready(function() {
             let element = $(this).closest('tr');
             let id = element.attr('productId');
     
-            $.get('./../Controller/product-delete.php', { id: id }, function (response) {
-                // Convertir la respuesta a objeto JSON (necesario si el servidor no envía cabeceras JSON)
-                let respuesta = typeof response === 'string' ? JSON.parse(response) : response;
-                
-                // Crear plantilla para la barra de estado
-                let template_bar = `
-                    <li style="list-style: none;">status: ${respuesta.status}</li>
-                    <li style="list-style: none;">message: ${respuesta.message}</li>
-                `;
-                
-                // Mostrar la barra de estado y actualizar contenido
+            // En app.js (modificar todas las llamadas AJAX)
+            $.get('./../Controller/product-delete.php', { id: id }, function (respuesta) {
                 $('#product-result')
                     .removeClass('d-none')
                     .addClass('card my-4 d-block');
                 
-                $('#container').html(template_bar);
+                // Usar el HTML generado desde el servidor
+                $('#container').html(respuesta.html);
                 
                 // Actualizar lista de productos
                 listarProductos();
-            }, 'json') // Forzar jQuery a interpretar la respuesta como JSON
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                console.error("Error en la solicitud:", textStatus, errorThrown);
-            });
+            }, 'json');
         }
     });
 
@@ -369,7 +362,7 @@ $(document).ready(function() {
         let name = $(elementName).attr('productId');
         $('button.btn-primary').text("Modificar Producto");
         //'./backend/product-single.php'
-        $.post('./products/product-single.php', {id}, function(response) {
+        $.post('./../Controller/product-single.php', {id}, function(response) {
             const jsonString = $(response).filter('#single-product-data').html();
             if (!jsonString) throw new Error('Formato de respuesta inválido');
 
@@ -393,7 +386,7 @@ $(document).ready(function() {
 
     function listarProductos() {
         $.ajax({
-            url: './products/product-list.php',
+            url: './../Controller/product-list.php',
             type: 'GET',
             success: function(html) {
                 // Limpiar resultados de búsqueda

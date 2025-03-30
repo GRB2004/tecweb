@@ -1,6 +1,6 @@
 <?php
     use TECWEB\CONTROLLER\ProductsController;
-    require_once __DIR__ . '/../../Controller/ProductsController.php';
+    require_once 'ProductsController.php';
 
     if(isset($_GET['search'])) {
         $searchTerm = $_GET['search'];

@@ -1,11 +1,11 @@
 <?php
 namespace TECWEB\Controller;
 
-use TECWEB\MODEL\DataBase as DataBase;
-//use TECWEB\MODEL\Producto as Producto;
-require_once __DIR__ . '/../Model/Database.php';
-//require_once __DIR__ . '/../Model/Producto.php';
-require_once __DIR__ . '/../Views/ProductView.php';
+  use TECWEB\MODEL\DataBase as DataBase;
+  //use TECWEB\MODEL\Producto as Producto;
+  require_once __DIR__ . '/../Model/Database.php';
+  //require_once __DIR__ . '/../Model/Producto.php';
+  require_once __DIR__ . '/../Views/ProductView.php';
 
 class ProductsController extends DataBase {
   private $data = NULL;
@@ -129,95 +129,131 @@ class ProductsController extends DataBase {
   }
 
   public function productAdd($producto) {
-    // Verificamos si recibimos los datos necesarios (nombre es obligatorio)
-    // Escapamos todos los valores para prevenir inyección SQL
-    $this->data = array();
-    $this->conexion->set_charset("utf8");
-    $nombre = $producto->getNombre();
-    $marca = $producto->getMarca();
-    $modelo = $producto->getModelo();
-    
-    // Aseguramos que precio y unidades sean números
-    $precio = $producto->getPrecio();
-    $unidades = $producto->getUnidades();
-    
-    $detalles = $producto->getDetalles();
-    $imagen = $producto->getImagen();
-    
-    // Verificamos si ya existe un producto con ese nombre
-    $sql = "SELECT id FROM productos WHERE nombre = '$nombre' AND eliminado = 0";
-    $result = $this->conexion->query($sql);
+    try {
+        // Verificamos si recibimos los datos necesarios (nombre es obligatorio)
+        // Escapamos todos los valores para prevenir inyección SQL
+        $this->data = array();
+        $this->conexion->set_charset("utf8");
+        $nombre = $producto->getNombre();
+        $marca = $producto->getMarca();
+        $modelo = $producto->getModelo();
         
-    if ($result) {
-        if ($result->num_rows == 0) {
-            // No existe un producto con ese nombre, podemos insertarlo
-            $sql = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado) 
-                    VALUES ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen', 0)";
+        // Aseguramos que precio y unidades sean números
+        $precio = $producto->getPrecio();
+        $unidades = $producto->getUnidades();
+        
+        $detalles = $producto->getDetalles();
+        $imagen = $producto->getImagen();
+        
+        // Verificamos si ya existe un producto con ese nombre
+        $sql = "SELECT id FROM productos WHERE nombre = '$nombre' AND eliminado = 0";
+        $result = $this->conexion->query($sql);
             
-            if($this->conexion->query($sql)){
-                $this->data['status'] = "success";
-                $this->data['message'] = "Producto agregado correctamente";
+        if ($result) {
+            if ($result->num_rows == 0) {
+                // No existe un producto con ese nombre, podemos insertarlo
+                $sql = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado) 
+                        VALUES ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen', 0)";
+                
+                if ($this->conexion->query($sql)) {
+                    $this->data = [
+                        'status' => "success",
+                        'message' => "Producto agregado correctamente",
+                        'html' => $this->view->mostrarStatus(['status' => 'success', 'message' => 'Producto agregado correctamente'])
+                    ];
+                } else {
+                    throw new Exception("Error al insertar el producto: " . $this->conexion->error);
+                }
             } else {
-                $this->data['message'] = "Error al insertar el producto: " . $this->conexion->error;
+                throw new Exception("Ya existe un producto con ese nombre");
             }
+            $result->free();
         } else {
-            $this->data['message'] = "Ya existe un producto con ese nombre";
+            throw new Exception("Error al verificar si el producto existe: " . $this->conexion->error);
         }
-        $result->free();
-    } else {
-        $this->data['message'] = "Error al verificar si el producto existe: " . $this->conexion->error;
+    } catch (Exception $e) {
+        $this->data = [
+            'status' => "error",
+            'message' => $e->getMessage(),
+            'html' => $this->view->mostrarStatus(['status' => 'error', 'message' => $e->getMessage()])
+        ];
+    } finally {
+        // Cierra la conexión
+        $this->conexion->close();
     }
-    
-    // Cierra la conexión
-    $this->conexion->close();
-  }
+}
 
   public function delete($id) {
-    // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
-    $this->data = array();
-    $sql = "UPDATE productos SET eliminado=1 WHERE id = {$id}";
-    if ( $this->conexion->query($sql) ) {
-        $this->data['status'] =  "success";
-        $this->data['message'] =  "Producto eliminado";
-} else {
-        $this->data['message'] = "ERROR: No se ejecuto $sql. " . mysqli_error($this->conexion);
+    try {
+        // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
+        $this->data = array();
+        $sql = "UPDATE productos SET eliminado=1 WHERE id = {$id}";
+        
+        if ($this->conexion->query($sql)) {
+            $this->data = [
+                'status' => "success",
+                'message' => "Producto eliminado",
+                'html' => $this->view->mostrarStatus(['status' => 'success', 'message' => 'Producto eliminado'])
+            ];
+        } else {
+            throw new Exception("Error al eliminar el producto: " . $this->conexion->error);
+        }
+    } catch (Exception $e) {
+        $this->data = [
+            'status' => "error",
+            'message' => $e->getMessage(),
+            'html' => $this->view->mostrarStatus(['status' => 'error', 'message' => $e->getMessage()])
+        ];
+    } finally {
+        $this->conexion->close();
     }
-$this->conexion->close();
+}
+
+public function edit($producto) {
+  try {
+      $this->data = array();
+      $id = $producto->getId();
+      $nombre = $producto->getNombre();
+      $marca = $producto->getMarca();
+      $modelo = $producto->getModelo();
+      
+      // Aseguramos que precio y unidades sean números
+      $precio = $producto->getPrecio();
+      $unidades = $producto->getUnidades();
+      
+      $detalles = $producto->getDetalles();
+      $imagen = $producto->getImagen();
+      
+      // Construir la consulta SQL
+      $sql = "UPDATE productos SET
+      nombre='$nombre', 
+      marca='$marca', 
+      modelo='$modelo', 
+      precio=$precio, 
+      detalles='$detalles', 
+      unidades=$unidades, 
+      imagen='$imagen' 
+      WHERE id=$id";
+      
+      // Ejecutar la consulta
+      if ($this->conexion->query($sql)) {
+          $this->data = [
+              'status' => "success",
+              'message' => "Producto actualizado",
+              'html' => $this->view->mostrarStatus(['status' => 'success', 'message' => 'Producto actualizado'])
+          ];
+      } else {
+          throw new Exception("ERROR: No se ejecutó $sql. " . $this->conexion->error);
+      }
+  } catch (Exception $e) {
+      $this->data = [
+          'status' => "error",
+          'message' => $e->getMessage(),
+          'html' => $this->view->mostrarStatus(['status' => 'error', 'message' => $e->getMessage()])
+      ];
+  } finally {
+      $this->conexion->close();
   }
-
-  public function edit($producto){
-    $this->data = array();
-    $id = $producto->getId();
-    $nombre = $producto->getNombre();
-    $marca = $producto->getMarca();
-    $modelo = $producto->getModelo();
-    
-    // Aseguramos que precio y unidades sean números
-    $precio = $producto->getPrecio();
-    $unidades = $producto->getUnidades();
-    
-    $detalles = $producto->getDetalles();
-    $imagen = $producto->getImagen();
-    // Construir la consulta SQL
-    $sql = "UPDATE productos SET
-    nombre='$nombre', 
-    marca='$marca', 
-    modelo='$modelo', 
-    precio=$precio, 
-    detalles='$detalles', 
-    unidades=$unidades, 
-    imagen='$imagen' 
-    WHERE id=$id";
-    
-    // Ejecutar la consulta
-    if($this->conexion->query($sql)) {
-    $this->data['status'] = "success";
-    $this->data['message'] = "Producto actualizado";
-    } else {
-    $this->data['message'] = "ERROR: No se ejecutó $sql. " . mysqli_error($this->conexion);
-    }
-
-    $this->conexion->close();
 }
 
   public function getData() {

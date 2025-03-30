@@ -6,8 +6,16 @@ class ProductView {
         $this->basePath = $basePath;
     }
 
-    public function mostrarAdd($error = null) {
-        $this->renderTemplate('product-add.php', ['error' => $error]);
+    public function mostrarStatus($data) {
+        $status = isset($data['status']) ? $data['status'] : 'error';
+        $message = isset($data['message']) ? $data['message'] : 'Error desconocido';
+        
+        // Plantilla HTML reusable con estilos Bootstrap
+        return '
+        <div class="alert alert-' . ($status === 'success' ? 'success' : 'danger') . '">
+            <h4 class="alert-heading">' . strtoupper($status) . '</h4>
+            <p class="mb-0">' . htmlspecialchars($message) . '</p>
+        </div>';
     }
 
     public function mostrarEdit($producto, $error = null) {

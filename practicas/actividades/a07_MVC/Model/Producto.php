@@ -6,7 +6,7 @@ namespace TECWEB\MODEL;
 class Producto {
     // Referencia a la instancia de Products para poder llamar a productAdd()
     private static $productsObj;
-    
+    private $id;
     private $nombre;
     private $marca;
     private $modelo;
@@ -21,23 +21,40 @@ class Producto {
     }
 
     // Constructor completo: asigna propiedades y llama a productAdd()
-    public function __construct($name, $marca, $modelo, $precio, $unidades, $detalles, $imagen) {
-        $this->nombre   = $name;
-        $this->marca    = $marca;
-        $this->modelo   = $modelo;
-        $this->precio   = $precio;
+    // Constructor modificado para aceptar ID
+    public function __construct(
+        $nombre,
+        $marca,
+        $modelo,
+        $precio,
+        $unidades,
+        $detalles,
+        $imagen,
+        $id = null // ID opcional
+    ) {
+        $this->id = $id;
+        $this->nombre = $nombre;
+        $this->marca = $marca;
+        $this->modelo = $modelo;
+        $this->precio = $precio;
         $this->unidades = $unidades;
         $this->detalles = $detalles;
-        $this->imagen   = $imagen;
-        
-        
-        // Llamada a productAdd() si se ha asignado la instancia de Products
+        $this->imagen = $imagen;
+
+        // Llamar a edit() o productAdd() automáticamente
         if (self::$productsObj) {
-            self::$productsObj->productAdd($this);
+            if ($this->id !== null) {
+                self::$productsObj->edit($this);
+            } else {
+                self::$productsObj->productAdd($this);
+            }
         }
     }
 
     // Métodos getter para acceder a los atributos
+    public function getId() {
+        return $this->id;
+    }
     public function getNombre() {
         return $this->nombre;
     }
