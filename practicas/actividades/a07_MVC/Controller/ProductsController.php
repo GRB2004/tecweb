@@ -3,12 +3,14 @@ namespace TECWEB\Controller;
 
 use TECWEB\MODEL\DataBase as DataBase;
 require_once __DIR__ . '/../Model/Database.php';
-
+require_once __DIR__ . '/../Views/ProductView.php';
 class ProductsController extends DataBase {
   private $data = NULL;
+  private $view;
   public function __construct($user='root', $pass='23102005', $db) {
     $this->data = array();
     parent::__construct($user, $pass, $db);
+    $this->view = new \ProductView();
   }
 
   public function list() {
@@ -27,6 +29,7 @@ class ProductsController extends DataBase {
         }
       }
       $result->free();
+      echo $this->view->mostrarListaCompleta($this->data);
     } else {
       die('Query Error: '.mysqli_error($this->conexion));
     }
@@ -49,32 +52,52 @@ class ProductsController extends DataBase {
             }
           }
             }
+      echo $this->view->buscarProducto($this->data);
 			$result->free();
 		$this->conexion->close();
     } 
   }
 
+  public function sugerenciasNombres($searchTerm, $nombreIngresado) {
+    $this->data = array();
+    $searchTerm = $this->conexion->real_escape_string($searchTerm);
+    
+    $sql = "SELECT nombre FROM productos 
+            WHERE nombre LIKE '%$searchTerm%' 
+            AND eliminado = 0
+            ORDER BY nombre ASC
+            LIMIT 5";
+
+    if ($result = $this->conexion->query($sql)) {
+        $this->data = $result->fetch_all(MYSQLI_ASSOC);
+        $result->free();
+    }
+    
+    $this->conexion->close();
+    echo $this->view->mostrarSugerencias($this->data, $nombreIngresado);
+}
+
   public function single($id) {
     $this->data = array();
-    // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
-    if ( $result = $this->conexion->query("SELECT * FROM productos WHERE id = {$id}") ) {
-        // SE OBTIENEN LOS RESULTADOS
+    
+    if ($result = $this->conexion->query("SELECT * FROM productos WHERE id = {$id}")) {
         $row = $result->fetch_assoc();
-
-        if(!is_null($row)) {
-            // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
-            foreach($row as $key => $value) {
-                $this->data[$key] = utf8_encode($value);
-            }
+        
+        if(!empty($row)) {
+            $this->data = array_map('utf8_encode', $row);
+            // Usar la vista para generar la respuesta
+            echo $this->view->mostrarSingle($this->data);
         } else {
-            $this->data['error'] = 'Producto no encontrado';
+            echo json_encode(['error' => 'Producto no encontrado']);
         }
+        
         $result->free();
     } else {
-        $this->data['error'] = 'Query Error: '.mysqli_error($this->conexion);
+        echo json_encode(['error' => 'Error de consulta: '.mysqli_error($this->conexion)]);
     }
+    
     $this->conexion->close();
-  }
+}
 
   public function singleByName($nombre) {
     $this->data = array();
