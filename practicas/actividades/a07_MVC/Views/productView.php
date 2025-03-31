@@ -1,8 +1,10 @@
 <?php
+
+namespace TECWEB\VIEWS;
 class ProductView {
     private $basePath;
 
-    public function __construct($basePath = '../Views/products/') {
+    public function __construct($basePath = 'C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Views\productView.php') {
         $this->basePath = $basePath;
     }
 
@@ -25,38 +27,45 @@ class ProductView {
         ]);
     }
 
-    public function mostrarListaCompleta($productos) {
-      ob_start();
-      ?>
-      <table class="table table-bordered table-sm">
-          <thead>
-              <tr>
-                  <td>Id</td>
-                  <td>Nombre</td>
-                  <td>Descripción</td>
-                  <td>Acciones</td>
-              </tr>
-          </thead>
-          <tbody>
-              <?php foreach ($productos as $producto): ?>
-              <tr productId="<?= $producto['id'] ?>">
-                  <td><?= $producto['id'] ?></td>
-                  <td>
-                      <a href="#" class="product-item"><?= htmlspecialchars($producto['nombre']) ?></a>
-                  </td>
-                  <td><?= htmlspecialchars($producto['detalles']) ?></td>
-                  <td>
-                      <button class="product-delete btn btn-danger">
-                          Eliminar
-                      </button>
-                  </td>
-              </tr>
-              <?php endforeach; ?>
-          </tbody>
-      </table>
-      <?php
-      return ob_get_clean();
-  }
+    public function mostrarListaCompleta($productos, $onlyTbody = false) {
+        ob_start();
+        ?>
+        <?php if (!$onlyTbody): ?>
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Nombre</td>
+                    <td>Descripción</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+        <?php endif; ?>
+        
+        <?php foreach ($productos as $producto): ?>
+        <tr productId="<?= $producto['id'] ?>">
+            <td><?= $producto['id'] ?></td>
+            <td>
+                <a href="#" class="product-item"><?= htmlspecialchars($producto['nombre']) ?></a>
+            </td>
+            <td><?= htmlspecialchars($producto['detalles']) ?></td>
+            <td>
+                <button class="product-delete btn btn-danger">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        
+        <?php if (!$onlyTbody): ?>
+            </tbody>
+        </table>
+        <?php endif; ?>
+        
+        <?php
+        return ob_get_clean();
+    }
 
   public function buscarProducto($productos) {
     ob_start();
@@ -135,15 +144,17 @@ public function mostrarSugerencias($productos, $nombreIngresado) {
   return ob_get_clean();
 }
 
-    public function mostrarSingle($producto) {
-      ob_start();
-      ?>
-      <script type="application/json" id="single-product-data">
-          <?= json_encode($producto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>
-      </script>
-      <?php
-      return ob_get_clean();
-  }
+public function mostrarProducto($producto) {
+    // Enviar el contenido directamente al navegador, no como un buffer
+    header('Content-Type: text/html');
+    ?>
+    <div>
+        <script type="application/json" id="single-product-data">
+            <?= json_encode($producto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>
+        </script>
+    </div>
+    <?php
+}
 
 
     private function renderTemplate($template, $data = []) {

@@ -227,41 +227,67 @@ $(document).ready(function() {
             if (nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas) {
                 
                 let url = edit === false ? './../Controller/product-add.php' : './../Controller/product-edit.php';
-console.log(url);
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: datosProducto,
-            dataType: 'json'
-        })
-        .done(function(respuesta) {
-            // Mostrar notificación
-            console.log(respuesta);
-            
-            // Usar el HTML generado por el servidor
-            $('#product-result')
-                .removeClass('d-none')
-                .addClass('card my-4 d-block')
-                .find('#container').html(respuesta.html);
-            
-            listarProductos();
-            $('#product-form').trigger('reset');
-            $('button.btn-primary').text("Agregar Producto");
-            edit = false;
-        })
-            .fail(function(xhr) {
-                const error = xhr.responseJSON || { status: 'error', message: 'Error en el servidor' };
-                console.log(error);
                 
-                // Mostrar el HTML de error si está disponible, o un mensaje genérico
-                $('#container').html(error.html || `
-                    <li style="list-style: none;">status: error</li>
-                    <li style="list-style: none;">message: ${error.message || 'Error desconocido'}</li>
-                `);
-                
-                $('#product-result').removeClass('d-none').addClass('d-block');
-            });
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: datosProducto,
+                    dataType: 'json'
+                })
+                .done(function(respuesta) {
+                    if (respuesta.html) {
+                        $('#product-result')
+                            .removeClass('d-none')
+                            .addClass('card my-4 d-block')
+                            .find('#container').html(respuesta.html);
+                        
+                        listarProductos();
+                        $('#product-form').trigger('reset');
+                        $('button.btn-primary').text("Agregar Producto").removeClass('btn-warning').addClass('btn-success');
+                        edit = false;
+                    }
+                })
+                .fail(function(xhr) {
+                    console.error('Error en la petición:', {
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        responseText: xhr.responseText,
+                        readyState: xhr.readyState
+                    });
+                    
+                    let errorMessage = 'Error desconocido';
+                    let errorHTML = '';
+                    
+                    try {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        errorMessage = errorResponse.message || errorResponse.html || 'Error en el servidor';
+                        
+                        errorHTML = `
+                        <div class="alert alert-danger">
+                            <h4 class="alert-heading">ERROR (${errorResponse.status})</h4>
+                            <p class="mb-0">${errorMessage}</p>
+                            ${errorResponse.debug ? `
+                            <hr>
+                            <div class="text-muted small">
+                                <p>Código error: ${errorResponse.error_code || 'N/A'}</p>
+                                <p>Timestamp: ${errorResponse.debug.timestamp || 'N/A'}</p>
+                            </div>
+                            ` : ''}
+                        </div>`;
+                        
+                    } catch (e) {
+                        errorMessage = `${xhr.statusText} (${xhr.status})`;
+                        errorHTML = `
+                        <div class="alert alert-danger">
+                            <h4 class="alert-heading">ERROR CRÍTICO</h4>
+                            <p class="mb-0">${errorMessage}</p>
+                            <pre class="mt-2 small">${xhr.responseText}</pre>
+                        </div>`;
+                    }
+                    
+                    $('#container').html(errorHTML);
+                    $('#product-result').removeClass('d-none').addClass('d-block');
+                });
                 
             } else {
                 $('#container').html(`
@@ -361,47 +387,82 @@ console.log(url);
         let id = $(element).attr('productId');
         let name = $(elementName).attr('productId');
         $('button.btn-primary').text("Modificar Producto");
-        //'./backend/product-single.php'
+        console.log(id);
         $.post('./../Controller/product-single.php', {id}, function(response) {
-            const jsonString = $(response).filter('#single-product-data').html();
-            if (!jsonString) throw new Error('Formato de respuesta inválido');
-
-            const productData = JSON.parse(jsonString);
-            // Actualiza estos selectores según tu interfaz
-            $('#name').val(productData.nombre);
-            $('#productId').val(productData.id);
-            $('#marca').val(productData.marca);
-            $('#modelo').val(productData.modelo);
-            $('#precio').val(productData.precio);
-            $('#unidades').val(productData.unidades);
-            $('#imagen').val(productData.imagen);
-            $('#description').val(productData.detalles);
-            edit = true;
-            console.log(edit);
+            try {
+                // Buscar el elemento con el JSON dentro de la respuesta HTML
+                const jsonElement = $(response).find('#single-product-data');
+                
+                if (jsonElement.length === 0) {
+                    console.error('Elemento #single-product-data no encontrado en la respuesta');
+                    return;
+                }
+                
+                const jsonString = jsonElement.html();
+                const productData = JSON.parse(jsonString);
+                
+                // Actualiza la interfaz con los datos recibidos
+                $('#name').val(productData.nombre);
+                $('#productId').val(productData.id);
+                $('#marca').val(productData.marca);
+                $('#modelo').val(productData.modelo);
+                $('#precio').val(productData.precio);
+                $('#unidades').val(productData.unidades);
+                $('#imagen').val(productData.imagen);
+                $('#description').val(productData.detalles);
+                edit = true;
+                console.log(edit);
+                console.log('Producto cargado correctamente:', productData);
+            } catch (error) {
+                console.error('Error al procesar la respuesta:', error);
+                console.log('Respuesta recibida:', response);
+            }
         });
     });
     
 });
     
 
-    function listarProductos() {
-        $.ajax({
-            url: './../Controller/product-list.php',
-            type: 'GET',
-            success: function(html) {
-                // Limpiar resultados de búsqueda
+function listarProductos() {
+    $.ajax({
+        url: './../Controller/product-list.php',
+        type: 'GET',
+        dataType: 'html', // Esperamos HTML pero verificamos si es JSON en caso de error
+        success: function(response) {
+            try {
+                // Intenta parsear como JSON solo si hay error
+                if (typeof response === 'string' && response.startsWith('{')) {
+                    const data = JSON.parse(response);
+                    throw new Error(data.message);
+                }
+                
+                // Actualizar solo el cuerpo de la tabla
+                $('#products').html(response);
                 $('#product-result').addClass('d-none');
-                // Reemplazar solo el tbody de la tabla existente
-                const $newContent = $(html);
-                const $tbody = $newContent.find('tbody').html();
-                $('#products').html($tbody);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error cargando productos:", error);
-                $('#products').html('<tr><td colspan="4">Error cargando productos</td></tr>');
+            } catch (e) {
+                console.error("Error procesando respuesta:", e);
+                mostrarError(e.message);
             }
-        });
-    }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error de red:", error);
+            mostrarError("Error de conexión: " + error);
+        }
+    });
+}
+
+function mostrarError(mensaje) {
+    const errorHTML = `
+    <div class="alert alert-danger">
+        <h4 class="alert-heading">ERROR</h4>
+        <p class="mb-0">${mensaje}</p>
+    </div>`;
+    
+    $('#product-result')
+        .removeClass('d-none')
+        .addClass('card my-4 d-block')
+        .html(errorHTML);
+}
 
     
 });

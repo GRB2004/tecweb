@@ -1,0 +1,22 @@
+[31-Mar-2025 02:34:31 Europe/Berlin] PHP Warning:  Undefined property: TECWEB\MODEL\ProductModel::$conn in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 135
+[31-Mar-2025 02:34:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php:135
+Stack trace:
+#0 C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Controller\ProductsController.php(104): TECWEB\MODEL\ProductModel->actualizarProducto(Object(TECWEB\MODEL\Producto))
+#1 C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Controller\product-edit.php(49): TECWEB\Controller\ProductsController->edit(Object(TECWEB\MODEL\Producto))
+#2 {main}
+  thrown in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 135
+[31-Mar-2025 02:37:38 Europe/Berlin] PHP Warning:  Undefined property: TECWEB\MODEL\ProductModel::$conn in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 135
+[31-Mar-2025 02:37:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php:135
+Stack trace:
+#0 C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Controller\ProductsController.php(104): TECWEB\MODEL\ProductModel->actualizarProducto(Object(TECWEB\MODEL\Producto))
+#1 C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Controller\product-edit.php(53): TECWEB\Controller\ProductsController->edit(Object(TECWEB\MODEL\Producto))
+#2 {main}
+  thrown in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 135
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 149
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 150
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 151
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 152
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 153
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 154
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 155
+[31-Mar-2025 02:40:08 Europe/Berlin] PHP Notice:  Only variables should be passed by reference in C:\xampp\htdocs\tecweb\practicas\actividades\a07_MVC\Model\ProductModel.php on line 156

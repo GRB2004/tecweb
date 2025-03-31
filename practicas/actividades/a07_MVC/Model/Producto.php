@@ -15,42 +15,17 @@ class Producto {
     private $detalles;
     private $imagen;
 
-    // Método estático para asignar la instancia de Products
-    public static function setProductsObject($productsObj) {
-        self::$productsObj = $productsObj;
+    public function __construct(array $data) {
+        $this->id = $data['id'] ?? null;
+        $this->nombre = $data['nombre'];
+        $this->marca = $data['marca'];
+        $this->modelo = $data['modelo'];
+        $this->precio = (float)$data['precio'];
+        $this->unidades = (int)$data['unidades'];
+        $this->detalles = $data['detalles'];
+        $this->imagen = $data['imagen'];
     }
-
-    // Constructor completo: asigna propiedades y llama a productAdd()
-    // Constructor modificado para aceptar ID
-    public function __construct(
-        $nombre,
-        $marca,
-        $modelo,
-        $precio,
-        $unidades,
-        $detalles,
-        $imagen,
-        $id = null // ID opcional
-    ) {
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->marca = $marca;
-        $this->modelo = $modelo;
-        $this->precio = $precio;
-        $this->unidades = $unidades;
-        $this->detalles = $detalles;
-        $this->imagen = $imagen;
-
-        // Llamar a edit() o productAdd() automáticamente
-        if (self::$productsObj) {
-            if ($this->id !== null) {
-                self::$productsObj->edit($this);
-            } else {
-                self::$productsObj->productAdd($this);
-            }
-        }
-    }
-
+    
     // Métodos getter para acceder a los atributos
     public function getId() {
         return $this->id;
