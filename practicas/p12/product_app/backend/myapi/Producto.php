@@ -1,6 +1,6 @@
 <?php
 
-    namespace myapi\Producto;
+    
   // Clase Producto con referencia estática a la instancia de Products
     class Producto {
         // Referencia a la instancia de Products para poder llamar a productAdd()

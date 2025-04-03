@@ -74,11 +74,32 @@
     $this->conexion->close();
     }
 
+    public function search($search) {
+      // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
+      $this->data = array();
+      // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
+      $sql = "SELECT * FROM productos WHERE (id = '{$search}' OR nombre LIKE '%{$search}%' OR marca LIKE '%{$search}%' OR detalles LIKE '%{$search}%') AND eliminado = 0";
+      if ( $result = $this->conexion->query($sql) ) {
+          // SE OBTIENEN LOS RESULTADOS
+          $rows = $result->fetch_all(MYSQLI_ASSOC);
+          if(!is_null($rows)) {
+            // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
+            foreach($rows as $num => $row) {
+              foreach($row as $key => $value) {
+                $this->data[$num][$key] = utf8_encode($value);
+              }
+            }
+              }
+        $result->free();
+      $this->conexion->close();
+      } 
+    }
+
 
     public function getData() {
       return json_encode($this->data, JSON_PRETTY_PRINT);
     }
-  
+
   }
 
 

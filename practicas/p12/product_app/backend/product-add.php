@@ -2,7 +2,7 @@
 
     use myapi\Create\Create as Create;
     require_once __DIR__ . '/start.php';
-    use myapi\Producto as Producto;
+    require_once __DIR__ . '/myapi/Producto.php';
 
     $prodObj = new Create('root', '23102005','marketzone');
 
