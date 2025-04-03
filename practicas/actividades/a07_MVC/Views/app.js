@@ -366,7 +366,6 @@ $(document).ready(function() {
             let element = $(this).closest('tr');
             let id = element.attr('productId');
     
-            // En app.js (modificar todas las llamadas AJAX)
             $.get('./../Controller/product-delete.php', { id: id }, function (respuesta) {
                 $('#product-result')
                     .removeClass('d-none')
