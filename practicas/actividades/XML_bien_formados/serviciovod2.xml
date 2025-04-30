@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogoVod>
+  <cuenta correo="gabramba@gmail.com">
+    <perfiles>
+      <perfil usuario="Gabriel" idioma="Español"/>
+      <perfil usuario="Pengano" idioma="English"/>
+    </perfiles>
+  </cuenta>
+  <contenido>
+    <peliculas>
+      <genero nombre="Terror">
+        <titulo duracion="1:30:20">
+          <nombre>Red</nombre>
+        </titulo>
+        <titulo duracion="1:30:20">
+          <nombre>Terror - I</nombre>
+        </titulo>
+        <titulo duracion="2:30:20">
+          <nombre>Terror - II</nombre>
+        </titulo>
+        <titulo duracion="2:30:20">
+          <nombre>Terror - III</nombre>
+        </titulo>
+      </genero>
+      <genero nombre="Ciencia Ficción">
+        <titulo duracion="2:30:00">
+          <nombre>Pelicula - I</nombre>
+        </titulo>
+        <titulo duracion="1:30:00">
+          <nombre>Pelicula - II</nombre>
+        </titulo>
+        <titulo duracion="2:30:00">
+          <nombre>Pelicula - III</nombre>
+        </titulo>
+        <titulo duracion="1:15:00">
+          <nombre>Pelicula - IV</nombre>
+        </titulo>
+      </genero>
+    </peliculas>
+    <programas>
+      <genero nombre="Comedia">
+        <titulo duracion="30 min">
+          <nombre>Malcolm el del Medio - Capitulo 1</nombre>
+        </titulo>
+        <titulo duracion="30 min">
+          <nombre>Bob Esponja - Capitulo 2</nombre>
+        </titulo>
+        <titulo duracion="1:00:00">
+          <nombre>gtggtgtg</nombre>
+        </titulo>
+        <titulo duracion="30 min">
+          <nombre>The Simpsons</nombre>
+        </titulo>
+      </genero>
+      <genero nombre="Thriller y Ciencia Ficción - Capitulo 2">
+        <titulo duracion="+1hr">
+          <nombre>Stranger Things</nombre>
+        </titulo>
+        <titulo duracion="2:20:00">
+          <nombre>Programa - I</nombre>
+        </titulo>
+        <titulo duracion="3:00:00">
+          <nombre>Programa - II</nombre>
+        </titulo>
+        <titulo duracion="+1hr">
+          <nombre>Programa - III</nombre>
+        </titulo>
+      </genero>
+    </programas>
+  </contenido>
+</catalogoVod>

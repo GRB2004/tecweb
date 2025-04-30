@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogoVod>
+  <cuenta>
+      <correo>gabramba@gmail.com</correo>
+      <perfiles>
+        <perfil>
+          <usuario>Gabriel</usuario>
+          <idioma>Español</idioma>
+        </perfil>
+        <perfil>
+          <usuario>Pengano</usuario>
+          <idioma>English</idioma>
+        </perfil>
+      </perfiles>
+  </cuenta>
+  <contenido>
+    <peliculas>
+      <genero>
+        <nombre>Terror</nombre>
+        <titulo>
+          <nombre>Red</nombre>
+          <duracion>1:30:20</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Terror - I</nombre>
+          <duracion>1:30:20</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Terror - II</nombre>
+          <duracion>2:30:20</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Terror - III</nombre>
+          <duracion>2:30:20</duracion>
+        </titulo>
+      </genero>
+      <genero>
+        <nombre>Ciencia Ficción</nombre>
+        <titulo>
+          <nombre>Pelicula - I</nombre>
+          <duracion>2:30:00</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Pelicula - II</nombre>
+          <duracion>1:30:00</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Pelicula - III</nombre>
+          <duracion>2:30:00</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Pelicula - IV</nombre>
+          <duracion>1:15:00</duracion>
+        </titulo>
+      </genero>
+    </peliculas>
+
+    <programas>
+      <genero>
+        <nombre>Comedia</nombre>
+        <titulo>
+          <nombre>Malcolm el del Medio - Capitulo 1</nombre>
+          <duracion>30 min</duracion>
+        </titulo>
+
+        <nombre>Comedia</nombre>
+        <titulo>
+          <nombre>Bob Esponja - Capitulo 2</nombre>
+          <duracion>30 min</duracion>
+        </titulo>
+
+        <nombre>Comedia</nombre>
+        <titulo>
+          <nombre>gtggtgtg</nombre>
+          <duracion>1:00:00</duracion>
+        </titulo>
+
+        <nombre>Comedia</nombre>
+        <titulo>
+          <nombre>The Simpsons</nombre>
+          <duracion>30 min</duracion>
+        </titulo>
+      </genero>
+
+      <genero>
+        <nombre>Thriller y Ciencia Ficción - Capitulo 2</nombre>
+        <titulo>
+          <nombre>Stranger Things</nombre>
+          <duracion>+1hr</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Programa - I</nombre>
+          <duracion>2:20:00</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Programa - II</nombre>
+          <duracion>3:00:00</duracion>
+        </titulo>
+        <titulo>
+          <nombre>Programa - III</nombre>
+          <duracion>+1hr</duracion>
+        </titulo>
+      </genero>
+
+    </programas>
+  </contenido>
+</catalogoVod>
