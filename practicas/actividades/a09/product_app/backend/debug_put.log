@@ -1,0 +1,21 @@
+Array
+(
+    [parsed_body] => 
+    [input_data] => nombre=MOCHILA+10+COLORES+CREMA+ROJA&id=2&marca=planeta&modelo=SEVEWV200&precio=9000.00&unidades=10&imagen=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F71J2nLuvqfL._AC_SX679_.jpg&detalles=hOKL
+    [post] => Array
+        (
+        )
+
+    [final_data] => Array
+        (
+            [nombre] => MOCHILA 10 COLORES CREMA ROJA
+            [id] => 2
+            [marca] => planeta
+            [modelo] => SEVEWV200
+            [precio] => 9000.00
+            [unidades] => 10
+            [imagen] => https://m.media-amazon.com/images/I/71J2nLuvqfL._AC_SX679_.jpg
+            [detalles] => hOKL
+        )
+
+)

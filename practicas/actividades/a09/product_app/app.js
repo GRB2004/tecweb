@@ -32,7 +32,7 @@ function buscarProducto() {
     
         // Verificamos que el campo no esté vacío
         $.ajax({
-            url: './backend/product-search.php',
+            url: `http://localhost/tecweb/practicas/actividades/a09/product_app/backend/products/search?search=${search}`,
             type: 'GET',
             data: { search: search },
             dataType: 'json',
@@ -258,14 +258,18 @@ $(document).ready(function() {
 
             if (nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas) {
                 
-                let url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
-            console.log(url);
+            // Si es edición, agregar el ID
+            if (edit) {
+                datosProducto.id = $('#productId').val();
+            }
 
             $.ajax({
-                url: url,
-                type: 'POST',
+                url: 'http://localhost/tecweb/practicas/actividades/a09/product_app/backend/product',
+                type: edit ? 'PUT' : 'POST',
                 data: datosProducto,
-                dataType: 'json'
+                dataType: 'json',
+                processData: true,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
             })
             .done(function(respuesta) {
                 // Mostrar notificación
@@ -313,12 +317,12 @@ $(document).ready(function() {
     //Para mostrar los nombres que fueron agregados anteriormente
     $(document).on('input', '#name', function () {
         let searchQuery = $(this).val().trim();
-        
+        /*
         if (searchQuery.length === 0) {
             $('#suggestions').html('').addClass('hidden');
             return;
         }
-
+        */
         $.ajax({
             url: './backend/product-search.php',
             type: 'GET',
@@ -359,14 +363,20 @@ $(document).ready(function() {
     });
 
     // Eliminar productos
-    $(document).on('click', '.product-delete', function () {
-        if (confirm('¿Estás seguro de eliminar este producto?')) {
-            let element = $(this).closest('tr');
-            let id = element.attr('productId');
-    
-            $.get('./backend/product-delete.php', { id: id }, function (response) {
-                // Convertir la respuesta a objeto JSON (necesario si el servidor no envía cabeceras JSON)
-                let respuesta = typeof response === 'string' ? JSON.parse(response) : response;
+// Eliminar productos
+$(document).on('click', '.product-delete', function () {
+    if (confirm('¿Estás seguro de eliminar este producto?')) {
+        let element = $(this).closest('tr');
+        let id = element.attr('productId');
+
+        $.ajax({
+            url: 'http://localhost/tecweb/practicas/actividades/a09/product_app/backend/product',
+            type: 'DELETE',
+            data: { id: id },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: 'json',
+            success: function (respuesta) {
+                console.log("Respuesta exitosa:", respuesta);
                 
                 // Crear plantilla para la barra de estado
                 let template_bar = `
@@ -383,12 +393,47 @@ $(document).ready(function() {
                 
                 // Actualizar lista de productos
                 listarProductos();
-            }, 'json') // Forzar jQuery a interpretar la respuesta como JSON
-            .fail(function(jqXHR, textStatus, errorThrown) {
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
                 console.error("Error en la solicitud:", textStatus, errorThrown);
-            });
-        }
-    });
+                console.log("Respuesta texto:", jqXHR.responseText);
+                
+                let errorMsg = 'Error al eliminar el producto';
+                
+                // Intentar obtener detalles del error en formato JSON
+                if (jqXHR.responseText) {
+                    try {
+                        let error = JSON.parse(jqXHR.responseText);
+                        errorMsg = error.message || errorMsg;
+                        
+                        // Mostrar el error
+                        let template_error = `
+                            <li style="list-style: none;">status: error</li>
+                            <li style="list-style: none;">message: ${errorMsg}</li>
+                        `;
+                        
+                        $('#container').html(template_error);
+                    } catch (e) {
+                        console.error("Error al parsear la respuesta:", e);
+                        $('#container').html(`
+                            <li style="list-style: none;">status: error</li>
+                            <li style="list-style: none;">message: ${errorMsg}</li>
+                        `);
+                    }
+                } else {
+                    $('#container').html(`
+                        <li style="list-style: none;">status: error</li>
+                        <li style="list-style: none;">message: ${errorMsg}</li>
+                    `);
+                }
+                
+                $('#product-result')
+                    .removeClass('d-none')
+                    .addClass('card my-4 d-block');
+            }
+        });
+    }
+});
 
     $(document).on('click', '.product-item', function() {
         let element = $(this)[0].parentElement.parentElement;
@@ -423,6 +468,7 @@ $(document).ready(function() {
             url: 'http://localhost/tecweb/practicas/actividades/a09/product_app/backend/products',
             type: 'GET',
             success: function (response) {
+                console.log(response);
                 let products = JSON.parse(response);
                 let template = '';
                 products.forEach(product => {
